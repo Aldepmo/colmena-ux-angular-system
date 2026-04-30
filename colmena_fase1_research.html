@@ -1,0 +1,311 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --honey:#C8862A;--honey-light:#F5E6C8;--honey-mid:#E5C07B;
+  --teal:#1A6B5A;--teal-light:#D4EDE7;
+  --coral:#C84B2F;--coral-light:#F5DDD7;
+  --purple:#5A3A9A;--purple-light:#EAE4F5;
+  --text:#1A1A18;--text-muted:#5A5A54;--text-hint:#9A9A92;
+  --bg:#FAFAF7;--surface:#FFFFFF;--border:rgba(26,26,24,0.1);
+}
+@media(prefers-color-scheme:dark){:root{
+  --honey:#E5A83C;--honey-light:#3A2A0A;--honey-mid:#7A5A1A;
+  --teal:#4ABFA0;--teal-light:#0A2520;
+  --coral:#E86A4A;--coral-light:#3A1A10;
+  --purple:#9A7AE0;--purple-light:#1A0A3A;
+  --text:#bdbd0a;--text-muted:#9A9A92;--text-hint:#5A5A54;
+  --bg:#1A1A18;--surface:#242420;--border:rgba(240,240,232,0.1);
+}}
+body,#root{background:transparent;font-family:'DM Sans',sans-serif;color:var(--text);font-size:14px;line-height:1.6}
+
+.phase-header{padding:1.5rem 0 1rem;border-bottom:0.5px solid var(--border);margin-bottom:1.5rem}
+.phase-tag{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:0.4rem}
+.phase-title{font-family:'DM Serif Display',serif;font-size:1.6rem;line-height:1.15;color:var(--text)}
+.phase-title em{font-style:italic;color:var(--honey)}
+.phase-desc{font-size:13px;color:var(--text-muted);margin-top:0.4rem}
+
+.section{margin-bottom:1.75rem}
+.section-label{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-hint);margin-bottom:0.875rem;display:flex;align-items:center;gap:8px}
+.section-label::after{content:'';flex:1;height:0.5px;background:var(--border)}
+
+/* Personas */
+.personas-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.persona-card{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;overflow:hidden}
+.persona-header{padding:0.875rem 1rem;display:flex;align-items:center;gap:10px;border-bottom:0.5px solid var(--border)}
+.persona-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:1.1rem;color:#fff;flex-shrink:0}
+.persona-name{font-size:13px;font-weight:500;color:var(--text)}
+.persona-role{font-size:11px;color:var(--text-muted)}
+.persona-body{padding:0.875rem 1rem}
+.persona-row{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;font-size:12px;margin-bottom:0.75rem}
+.persona-row-label{font-weight:500;color:var(--text-hint);white-space:nowrap}
+.persona-row-val{color:var(--text-muted)}
+.tag-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:0.5rem}
+.ptag{font-size:10px;padding:3px 8px;border-radius:20px;border:0.5px solid var(--border);color:var(--text-muted)}
+.pain-tag{background:var(--coral-light);border-color:transparent;color:var(--coral)}
+.goal-tag{background:var(--teal-light);border-color:transparent;color:var(--teal)}
+
+/* Empathy map */
+.empathy-map{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;gap:10px}
+.em-card{background:var(--surface);border:0.5px solid var(--border);border-radius:10px;padding:0.875rem 1rem}
+.em-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem}
+.em-item{font-size:12px;color:var(--text-muted);padding:4px 0;border-bottom:0.5px solid var(--border);display:flex;gap:6px;align-items:flex-start}
+.em-item:last-child{border-bottom:none}
+.em-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.em-says{--c:var(--teal)}.em-says .em-title{color:var(--teal)}.em-says .em-dot{background:var(--teal)}
+.em-thinks{--c:var(--purple)}.em-thinks .em-title{color:var(--purple)}.em-thinks .em-dot{background:var(--purple)}
+.em-does{--c:var(--honey)}.em-does .em-title{color:var(--honey)}.em-does .em-dot{background:var(--honey)}
+.em-feels{--c:var(--coral)}.em-feels .em-title{color:var(--coral)}.em-feels .em-dot{background:var(--coral)}
+.em-pains{grid-column:1/2;background:var(--coral-light);border-color:rgba(200,75,47,0.15)}
+.em-pains .em-title{color:var(--coral)}
+.em-pains .em-dot{background:var(--coral)}
+.em-gains{grid-column:2/3;background:var(--teal-light);border-color:rgba(26,107,90,0.15)}
+.em-gains .em-title{color:var(--teal)}
+.em-gains .em-dot{background:var(--teal)}
+
+/* Audit */
+.audit-list{display:flex;flex-direction:column;gap:8px}
+.audit-item{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:0.75rem 1rem;background:var(--surface);border:0.5px solid var(--border);border-radius:10px}
+.audit-sev{font-size:10px;font-weight:500;padding:3px 8px;border-radius:20px;white-space:nowrap}
+.sev-high{background:var(--coral-light);color:var(--coral)}
+.sev-med{background:var(--honey-light);color:var(--honey)}
+.sev-low{background:var(--teal-light);color:var(--teal)}
+.audit-text{font-size:12px;color:var(--text-muted)}
+.audit-area{font-size:10px;color:var(--text-hint)}
+
+/* Insight callouts */
+.insights{display:flex;flex-direction:column;gap:8px}
+.insight{display:flex;gap:10px;padding:0.875rem 1rem;background:var(--surface);border:0.5px solid var(--border);border-radius:10px;border-left:3px solid var(--honey)}
+.insight-num{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--honey);min-width:20px}
+.insight-text{font-size:13px;color:var(--text-muted);line-height:1.5}
+
+.nav-bottom{padding:1.25rem 0 0.25rem;display:flex;gap:8px;border-top:0.5px solid var(--border);margin-top:0.5rem}
+.btn{font-size:12px;font-weight:500;padding:7px 16px;border-radius:8px;border:none;cursor:pointer;transition:opacity 0.15s}
+.btn-primary{background:var(--honey);color:#fff}.btn-primary:hover{opacity:0.88}
+.btn-secondary{background:var(--surface);color:var(--text);border:0.5px solid var(--border)}.btn-secondary:hover{border-color:var(--honey)}
+</style>
+
+<div style="padding:0 0.25rem">
+
+<div class="phase-header">
+  <div class="phase-tag">Fase 1 · Design Thinking</div>
+  <h2 class="phase-title">Empatía e <em>Investigación</em></h2>
+  <p class="phase-desc">Quiénes son las usuarias, qué piensan, qué sienten y dónde el sistema actual las falla.</p>
+</div>
+
+<!-- PROTO-PERSONAS -->
+<div class="section">
+  <div class="section-label">Proto-personas</div>
+  <div class="personas-grid">
+
+    <div class="persona-card">
+      <div class="persona-header">
+        <div class="persona-avatar" style="background:#1A6B5A">MG</div>
+        <div>
+          <div class="persona-name">María Guadalupe</div>
+          <div class="persona-role">Venta de comida · 38 años · México</div>
+        </div>
+      </div>
+      <div class="persona-body">
+        <div class="persona-row">
+          <span class="persona-row-label">Dispositivo</span><span class="persona-row-val">Android gama media, datos móviles limitados</span>
+          <span class="persona-row-label">Educación</span><span class="persona-row-val">Secundaria completa</span>
+          <span class="persona-row-label">Finanzas</span><span class="persona-row-val">Cuaderno de anotaciones, no banco formal</span>
+          <span class="persona-row-label">Tecnología</span><span class="persona-row-val">WhatsApp y Facebook; apps nuevas le generan desconfianza</span>
+        </div>
+        <div class="tag-row">
+          <span class="pain-tag">Miedo a "perder datos"</span>
+          <span class="pain-tag">Términos técnicos ajenos</span>
+          <span class="goal-tag">Saber si "le alcanza"</span>
+          <span class="goal-tag">Crecer el negocio</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona-card">
+      <div class="persona-header">
+        <div class="persona-avatar" style="background:#C8862A">LR</div>
+        <div>
+          <div class="persona-name">Lucía Rodríguez</div>
+          <div class="persona-role">Artesanía y ropa · 45 años · Colombia</div>
+        </div>
+      </div>
+      <div class="persona-body">
+        <div class="persona-row">
+          <span class="persona-row-label">Dispositivo</span><span class="persona-row-val">Smartphone básico, WiFi en casa</span>
+          <span class="persona-row-label">Educación</span><span class="persona-row-val">Primaria completa</span>
+          <span class="persona-row-label">Finanzas</span><span class="persona-row-val">Memoriza precios; confunde costos con ganancias</span>
+          <span class="persona-row-label">Tecnología</span><span class="persona-row-val">Usa apps de billetera, pero evita formularios largos</span>
+        </div>
+        <div class="tag-row">
+          <span class="pain-tag">Formularios intimidantes</span>
+          <span class="pain-tag">"No soy buena en números"</span>
+          <span class="goal-tag">Ahorrar para crecer</span>
+          <span class="goal-tag">Demostrar su progreso</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona-card">
+      <div class="persona-header">
+        <div class="persona-avatar" style="background:#5A3A9A">AP</div>
+        <div>
+          <div class="persona-name">Ana Pérez</div>
+          <div class="persona-role">Peluquería móvil · 29 años · Perú</div>
+        </div>
+      </div>
+      <div class="persona-body">
+        <div class="persona-row">
+          <span class="persona-row-label">Dispositivo</span><span class="persona-row-val">iPhone básico, buena conectividad</span>
+          <span class="persona-row-label">Educación</span><span class="persona-row-label">Bachillerato</span>
+          <span class="persona-row-label">Finanzas</span><span class="persona-row-val">Intuitiva; quiere aprender pero siente que "no es para ella"</span>
+          <span class="persona-row-label">Tecnología</span><span class="persona-row-val">Adopta apps rápido si son simples y visualmente claras</span>
+        </div>
+        <div class="tag-row">
+          <span class="pain-tag">Pantallas con mucho texto</span>
+          <span class="pain-tag">Falta de feedback visual</span>
+          <span class="goal-tag">Tener control real</span>
+          <span class="goal-tag">Sentirse profesional</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona-card">
+      <div class="persona-header">
+        <div class="persona-avatar" style="background:#C84B2F">RC</div>
+        <div>
+          <div class="persona-name">Rosa Chávez</div>
+          <div class="persona-role">Tienda de barrio · 54 años · Bolivia</div>
+        </div>
+      </div>
+      <div class="persona-body">
+        <div class="persona-row">
+          <span class="persona-row-label">Dispositivo</span><span class="persona-row-val">Android muy básico, pantalla pequeña</span>
+          <span class="persona-row-label">Educación</span><span class="persona-row-val">Primaria incompleta</span>
+          <span class="persona-row-label">Finanzas</span><span class="persona-row-val">Mezcla gastos personales y del negocio constantemente</span>
+          <span class="persona-row-label">Tecnología</span><span class="persona-row-val">Muy baja. Necesita guía paso a paso con iconografía clara</span>
+        </div>
+        <div class="tag-row">
+          <span class="pain-tag">Mezcla finanzas personales</span>
+          <span class="pain-tag">Letra pequeña inaccesible</span>
+          <span class="goal-tag">Dejar deudas</span>
+          <span class="goal-tag">Que la ayuden a entender</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MAPA DE EMPATÍA (usuaria principal: María Guadalupe) -->
+<div class="section">
+  <div class="section-label">Mapa de empatía — María Guadalupe (arquetipo principal)</div>
+  <div class="empathy-map">
+    <div class="em-card em-says">
+      <div class="em-title">Dice</div>
+      <div class="em-item"><div class="em-dot"></div><span>"No entiendo qué significa 'flujo de caja'"</span></div>
+      <div class="em-item"><div class="em-dot"></div><span>"Esto es muy complicado para mí"</span></div>
+      <div class="em-item"><div class="em-dot"></div><span>"¿Tengo que poner todo? ¿Y si me equivoco?"</span></div>
+    </div>
+    <div class="em-card em-thinks">
+      <div class="em-title">Piensa</div>
+      <div class="em-item"><div class="em-dot"></div><span>Que las herramientas financieras "son para gente estudiada"</span></div>
+      <div class="em-item"><div class="em-dot"></div><span>Que va a hacer algo mal y perderá datos importantes</span></div>
+      <div class="em-item"><div class="em-dot"></div><span>Que su cuaderno es más confiable</span></div>
+    </div>
+    <div class="em-card em-does">
+      <div class="em-title">Hace</div>
+      <div class="em-item"><div class="em-dot"></div><span>Abre la app, ve el formulario y cierra sin completar</span></div>
+      <div class="em-item"><div class="em-dot"></div><span>Registra solo cuando la acompaña alguien de Colmena</span></div>
+      <div class="em-item"><div class="em-dot"></div><span>Sigue usando el cuaderno en paralelo "por las dudas"</span></div>
+    </div>
+    <div class="em-card em-feels">
+      <div class="em-title">Siente</div>
+      <div class="em-item"><div class="em-dot"></div><span>Ansiedad ante formularios con muchos campos</span></div>
+      <div class="em-item"><div class="em-dot"></div><span>Vergüenza de no entender algo que "parece simple"</span></div>
+      <div class="em-item"><div class="em-dot"></div><span>Alivio cuando recibe un mensaje claro de confirmación</span></div>
+    </div>
+    <div class="em-card em-pains">
+      <div class="em-title">Frustraciones (Pains)</div>
+      <div class="em-item"><div class="em-dot"></div><span>Terminología financiera sin contexto ni glosario</span></div>
+      <div class="em-item"><div class="em-dot"></div><span>Sin feedback inmediato tras registrar un dato</span></div>
+      <div class="em-item"><div class="em-dot"></div><span>Letras pequeñas, bajo contraste bajo luz solar</span></div>
+      <div class="em-item"><div class="em-dot"></div><span>Flujo de 6+ pasos para una sola transacción</span></div>
+    </div>
+    <div class="em-card em-gains">
+      <div class="em-title">Motivaciones (Gains)</div>
+      <div class="em-item"><div class="em-dot"></div><span>Saber en segundos si "el negocio va bien"</span></div>
+      <div class="em-item"><div class="em-dot"></div><span>Recibir un "¡Bien hecho!" cuando registra</span></div>
+      <div class="em-item"><div class="em-dot"></div><span>Ver su progreso semana a semana de forma visual</span></div>
+      <div class="em-item"><div class="em-dot"></div><span>Sentirse capaz y profesional con su negocio</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- AUDITORÍA UX -->
+<div class="section">
+  <div class="section-label">Auditoría UX — Hallazgos del flujo actual</div>
+  <div class="audit-list">
+    <div class="audit-item">
+      <span class="audit-sev sev-high">Crítico</span>
+      <div><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px">Terminología sin traducción empática</div><div class="audit-text">Términos como "flujo de caja", "rentabilidad" y "egreso" aparecen sin contexto ni ayuda. Genera abandono inmediato.</div></div>
+      <span class="audit-area">UX Writing</span>
+    </div>
+    <div class="audit-item">
+      <span class="audit-sev sev-high">Crítico</span>
+      <div><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px">Flujo de registro de 7+ pasos</div><div class="audit-text">Para registrar una venta simple se requieren múltiples pantallas con categorías anidadas. Tasa de abandono alta en paso 3.</div></div>
+      <span class="audit-area">Flujo</span>
+    </div>
+    <div class="audit-item">
+      <span class="audit-sev sev-high">Crítico</span>
+      <div><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px">Sin feedback inmediato tras acción</div><div class="audit-text">La usuaria no recibe confirmación visual clara cuando registra un dato. Genera duda sobre si la acción fue exitosa.</div></div>
+      <span class="audit-area">Microinteracción</span>
+    </div>
+    <div class="audit-item">
+      <span class="audit-sev sev-med">Moderado</span>
+      <div><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px">Contraste insuficiente en exteriores</div><div class="audit-text">La paleta actual no cumple WCAG AA en condiciones de luz solar directa, entorno habitual de las usuarias.</div></div>
+      <span class="audit-area">Accesibilidad</span>
+    </div>
+    <div class="audit-item">
+      <span class="audit-sev sev-med">Moderado</span>
+      <div><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px">Dashboard sin jerarquía de información</div><div class="audit-text">Los indicadores de salud financiera tienen el mismo peso visual. La usuaria no sabe qué mirar primero ni qué significa cada número.</div></div>
+      <span class="audit-area">IA Visual</span>
+    </div>
+    <div class="audit-item">
+      <span class="audit-sev sev-low">Menor</span>
+      <div><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px">Sin estado vacío amigable</div><div class="audit-text">Cuando la usuaria no tiene datos registrados, la pantalla aparece en blanco sin invitación a la acción ni orientación.</div></div>
+      <span class="audit-area">Estados UI</span>
+    </div>
+  </div>
+</div>
+
+<!-- INSIGHTS CLAVE -->
+<div class="section">
+  <div class="section-label">Insights accionables para el diseño</div>
+  <div class="insights">
+    <div class="insight">
+      <div class="insight-num">1</div>
+      <div class="insight-text">El lenguaje es la barrera principal, no la tecnología. Si la usuaria no entiende la palabra, no completa el campo — independientemente de la usabilidad del formulario.</div>
+    </div>
+    <div class="insight">
+      <div class="insight-num">2</div>
+      <div class="insight-text">El valor tiene que ser inmediato y visible. Las usuarias necesitan ver el beneficio en los primeros 30 segundos de uso, o no regresan.</div>
+    </div>
+    <div class="insight">
+      <div class="insight-num">3</div>
+      <div class="insight-text">El feedback positivo crea hábito. Un "¡Bien hecho!" simple después de registrar es más poderoso que cualquier gráfico avanzado de análisis.</div>
+    </div>
+    <div class="insight">
+      <div class="insight-num">4</div>
+      <div class="insight-text">Mobile-first no es opcional: pantallas pequeñas, luz solar, una mano ocupada. Cada elemento del diseño debe funcionar en esas condiciones reales.</div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-bottom">
+  <button class="btn btn-primary" onclick="sendPrompt('Desarrolla la Fase 2: Definición y Estrategia del case study de Colmena, con user journey map, benchmark competitivo y estrategia de UX Writing')">Continuar → Fase 2</button>
+  <button class="btn btn-secondary" onclick="sendPrompt('Muéstrame el user journey map detallado del flujo actual de registro en Colmena')">Ver journey map detallado</button>
+</div>
+
+</div>

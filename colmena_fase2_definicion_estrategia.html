@@ -1,0 +1,349 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --honey:#C8862A;--honey-light:#F5E6C8;
+  --teal:#1A6B5A;--teal-light:#D4EDE7;
+  --coral:#C84B2F;--coral-light:#F5DDD7;
+  --purple:#5A3A9A;--purple-light:#EAE4F5;
+  --amber:#B87A10;--amber-light:#FDF0D0;
+  --text:#1A1A18;--text-muted:#5A5A54;--text-hint:#9A9A92;
+  --surface:#FFFFFF;--border:rgba(26,26,24,0.1);
+}
+@media(prefers-color-scheme:dark){:root{
+  --honey:#E5A83C;--honey-light:#3A2A0A;
+  --teal:#4ABFA0;--teal-light:#0A2520;
+  --coral:#E86A4A;--coral-light:#3A1A10;
+  --purple:#9A7AE0;--purple-light:#1A0A3A;
+  --amber:#D4A030;--amber-light:#2A1A00;
+  --text:#ecec31;--text-muted:#9A9A92;--text-hint:#5A5A54;
+  --surface:#242420;--border:rgba(240,240,232,0.1);
+}}
+body,#root{background:transparent;font-family:'DM Sans',sans-serif;color:var(--text);font-size:14px;line-height:1.6}
+
+.phase-header{padding:1.5rem 0 1rem;border-bottom:0.5px solid var(--border);margin-bottom:1.5rem}
+.phase-tag{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--honey);margin-bottom:0.4rem}
+.phase-title{font-family:'DM Serif Display',serif;font-size:1.6rem;line-height:1.15}
+.phase-title em{font-style:italic;color:var(--honey)}
+.phase-desc{font-size:13px;color:var(--text-muted);margin-top:0.4rem}
+
+.section{margin-bottom:1.75rem}
+.section-label{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-hint);margin-bottom:0.875rem;display:flex;align-items:center;gap:8px}
+.section-label::after{content:'';flex:1;height:0.5px;background:var(--border)}
+
+/* Journey Map */
+.journey-wrap{overflow-x:auto;padding-bottom:4px}
+.journey-table{min-width:620px;width:100%;border-collapse:collapse}
+.jt-head{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-hint);padding:0 8px 8px;text-align:left}
+.jt-stage{font-size:12px;font-weight:500;color:var(--text);background:var(--surface);border:0.5px solid var(--border);border-radius:8px;padding:6px 8px;text-align:center}
+.jt-cell{padding:4px 6px;vertical-align:top}
+.jt-tag{display:inline-block;font-size:11px;padding:3px 7px;border-radius:6px;margin:2px 2px 2px 0;line-height:1.3}
+.thought{background:var(--purple-light);color:var(--purple)}
+.action{background:var(--amber-light);color:var(--amber)}
+.pain{background:var(--coral-light);color:var(--coral)}
+.opp{background:var(--teal-light);color:var(--teal)}
+
+/* Emotion curve */
+.emotion-row{display:flex;align-items:flex-end;gap:4px;height:56px;margin-top:4px}
+.emo-bar{flex:1;border-radius:4px 4px 0 0;transition:height 0.3s;min-width:0}
+.emo-label{font-size:10px;color:var(--text-hint);text-align:center;margin-top:3px}
+
+/* Benchmark */
+.bench-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bench-card{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:0.875rem 1rem}
+.bench-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px}
+.bench-type{font-size:10px;color:var(--text-hint);margin-bottom:0.6rem}
+.bench-row{display:flex;justify-content:space-between;align-items:center;font-size:11px;padding:3px 0;border-bottom:0.5px solid var(--border)}
+.bench-row:last-child{border-bottom:none}
+.bench-attr{color:var(--text-muted)}
+.bench-val{font-weight:500}
+.val-good{color:var(--teal)}
+.val-mid{color:var(--amber)}
+.val-bad{color:var(--coral)}
+.bench-insight{margin-top:0.6rem;font-size:11px;color:var(--text-hint);padding-top:0.5rem;border-top:0.5px solid var(--border)}
+
+/* UX Writing table */
+.writing-list{display:flex;flex-direction:column;gap:8px}
+.writing-item{display:grid;grid-template-columns:1fr 20px 1fr auto;align-items:center;gap:8px;padding:0.75rem 1rem;background:var(--surface);border:0.5px solid var(--border);border-radius:10px}
+.writing-before{font-size:12px;color:var(--coral);text-decoration:line-through;opacity:0.8}
+.writing-arrow{font-size:14px;color:var(--text-hint);text-align:center}
+.writing-after{font-size:12px;font-weight:500;color:var(--teal)}
+.writing-why{font-size:10px;color:var(--text-hint);padding-left:8px;border-left:2px solid var(--border)}
+
+/* HMW */
+.hmw-list{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hmw-card{background:var(--honey-light);border:0.5px solid rgba(200,134,42,0.2);border-radius:10px;padding:0.875rem 1rem}
+.hmw-label{font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;color:var(--honey);margin-bottom:4px}
+.hmw-text{font-size:12px;color:var(--text-muted);line-height:1.45}
+
+.nav-bottom{padding:1.25rem 0 0.25rem;display:flex;gap:8px;border-top:0.5px solid var(--border);margin-top:0.5rem}
+.btn{font-size:12px;font-weight:500;padding:7px 16px;border-radius:8px;border:none;cursor:pointer}
+.btn-primary{background:var(--honey);color:#fff}
+.btn-secondary{background:var(--surface);color:var(--text);border:0.5px solid var(--border)}
+</style>
+
+<div style="padding:0 0.25rem">
+
+<div class="phase-header">
+  <div class="phase-tag">Fase 2 · Design Thinking</div>
+  <h2 class="phase-title">Definición y <em>Estrategia</em></h2>
+  <p class="phase-desc">Journey map del flujo actual, benchmark competitivo y estrategia de UX Writing para traducir el lenguaje financiero.</p>
+</div>
+
+<!-- JOURNEY MAP -->
+<div class="section">
+  <div class="section-label">User journey map — Registro de una venta (flujo actual)</div>
+  <div class="journey-wrap">
+    <table class="journey-table">
+      <thead>
+        <tr>
+          <th class="jt-head" style="width:14%">Etapa</th>
+          <th class="jt-head" style="width:22%">Pensamiento</th>
+          <th class="jt-head" style="width:22%">Acción</th>
+          <th class="jt-head" style="width:22%">Pain point</th>
+          <th class="jt-head" style="width:20%">Oportunidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="jt-cell"><div class="jt-stage">1. Apertura</div></td>
+          <td class="jt-cell"><span class="jt-tag thought">"¿Cómo entro al módulo?"</span></td>
+          <td class="jt-cell"><span class="jt-tag action">Busca ícono en menú</span></td>
+          <td class="jt-cell"><span class="jt-tag pain">Ícono no reconocible</span></td>
+          <td class="jt-cell"><span class="jt-tag opp">Etiqueta "Mi dinero"</span></td>
+        </tr>
+        <tr>
+          <td class="jt-cell"><div class="jt-stage">2. Dashboard</div></td>
+          <td class="jt-cell"><span class="jt-tag thought">"¿Qué significa todo esto?"</span></td>
+          <td class="jt-cell"><span class="jt-tag action">Escanea pantalla sin foco</span></td>
+          <td class="jt-cell"><span class="jt-tag pain">Números sin contexto</span></td>
+          <td class="jt-cell"><span class="jt-tag opp">Semáforo visual simple</span></td>
+        </tr>
+        <tr>
+          <td class="jt-cell"><div class="jt-stage">3. Registro</div></td>
+          <td class="jt-cell"><span class="jt-tag thought">"¿Esto es ingreso o egreso?"</span></td>
+          <td class="jt-cell"><span class="jt-tag action">Toca "+" y ve formulario</span></td>
+          <td class="jt-cell"><span class="jt-tag pain">7 campos de golpe</span></td>
+          <td class="jt-cell"><span class="jt-tag opp">Flujo de 2 pasos máx.</span></td>
+        </tr>
+        <tr>
+          <td class="jt-cell"><div class="jt-stage">4. Categoría</div></td>
+          <td class="jt-cell"><span class="jt-tag thought">"¿En cuál categoría va?"</span></td>
+          <td class="jt-cell"><span class="jt-tag action">Abre dropdown anidado</span></td>
+          <td class="jt-cell"><span class="jt-tag pain">15 categorías técnicas</span></td>
+          <td class="jt-cell"><span class="jt-tag opp">5 categorías con ícono</span></td>
+        </tr>
+        <tr>
+          <td class="jt-cell"><div class="jt-stage">5. Guardar</div></td>
+          <td class="jt-cell"><span class="jt-tag thought">"¿Se guardó bien?"</span></td>
+          <td class="jt-cell"><span class="jt-tag action">Toca "Guardar"</span></td>
+          <td class="jt-cell"><span class="jt-tag pain">Sin confirmación clara</span></td>
+          <td class="jt-cell"><span class="jt-tag opp">Toast + animación</span></td>
+        </tr>
+        <tr>
+          <td class="jt-cell"><div class="jt-stage">6. Retorno</div></td>
+          <td class="jt-cell"><span class="jt-tag thought">"¿Cambió algo?"</span></td>
+          <td class="jt-cell"><span class="jt-tag action">Vuelve al dashboard</span></td>
+          <td class="jt-cell"><span class="jt-tag pain">Dashboard igual que antes</span></td>
+          <td class="jt-cell"><span class="jt-tag opp">Mostrar impacto inmediato</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Curva emocional -->
+  <div style="margin-top:1rem">
+    <div style="font-size:11px;color:var(--text-hint);margin-bottom:6px">Curva emocional del flujo actual</div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:4px">
+      <div style="text-align:center">
+        <div style="height:56px;display:flex;align-items:flex-end;justify-content:center">
+          <div style="width:100%;height:55%;background:var(--amber-light);border:0.5px solid var(--amber);border-radius:4px 4px 0 0"></div>
+        </div>
+        <div style="font-size:10px;color:var(--text-hint);margin-top:3px">Apertura</div>
+        <div style="font-size:9px;color:var(--amber)">Neutral</div>
+      </div>
+      <div style="text-align:center">
+        <div style="height:56px;display:flex;align-items:flex-end;justify-content:center">
+          <div style="width:100%;height:35%;background:var(--coral-light);border:0.5px solid var(--coral);border-radius:4px 4px 0 0"></div>
+        </div>
+        <div style="font-size:10px;color:var(--text-hint);margin-top:3px">Dashboard</div>
+        <div style="font-size:9px;color:var(--coral)">Confusión</div>
+      </div>
+      <div style="text-align:center">
+        <div style="height:56px;display:flex;align-items:flex-end;justify-content:center">
+          <div style="width:100%;height:20%;background:var(--coral-light);border:0.5px solid var(--coral);border-radius:4px 4px 0 0"></div>
+        </div>
+        <div style="font-size:10px;color:var(--text-hint);margin-top:3px">Registro</div>
+        <div style="font-size:9px;color:var(--coral)">Estrés</div>
+      </div>
+      <div style="text-align:center">
+        <div style="height:56px;display:flex;align-items:flex-end;justify-content:center">
+          <div style="width:100%;height:15%;background:var(--coral-light);border:0.5px solid var(--coral);border-radius:4px 4px 0 0"></div>
+        </div>
+        <div style="font-size:10px;color:var(--text-hint);margin-top:3px">Categoría</div>
+        <div style="font-size:9px;color:var(--coral)">Abandono</div>
+      </div>
+      <div style="text-align:center">
+        <div style="height:56px;display:flex;align-items:flex-end;justify-content:center">
+          <div style="width:100%;height:30%;background:var(--amber-light);border:0.5px solid var(--amber);border-radius:4px 4px 0 0"></div>
+        </div>
+        <div style="font-size:10px;color:var(--text-hint);margin-top:3px">Guardar</div>
+        <div style="font-size:9px;color:var(--amber)">Duda</div>
+      </div>
+      <div style="text-align:center">
+        <div style="height:56px;display:flex;align-items:flex-end;justify-content:center">
+          <div style="width:100%;height:25%;background:var(--coral-light);border:0.5px solid var(--coral);border-radius:4px 4px 0 0"></div>
+        </div>
+        <div style="font-size:10px;color:var(--text-hint);margin-top:3px">Retorno</div>
+        <div style="font-size:9px;color:var(--coral)">Frustración</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BENCHMARK -->
+<div class="section">
+  <div class="section-label">Benchmark competitivo — Apps financieras para MiPyMEs en LATAM</div>
+  <div class="bench-grid">
+    <div class="bench-card">
+      <div class="bench-name">Alegra</div>
+      <div class="bench-type">Facturación · Colombia/LATAM</div>
+      <div class="bench-row"><span class="bench-attr">Onboarding</span><span class="bench-val val-good">Guiado</span></div>
+      <div class="bench-row"><span class="bench-attr">Lenguaje</span><span class="bench-val val-mid">Semi-técnico</span></div>
+      <div class="bench-row"><span class="bench-attr">Mobile UX</span><span class="bench-val val-good">Bueno</span></div>
+      <div class="bench-row"><span class="bench-attr">Feedback visual</span><span class="bench-val val-mid">Básico</span></div>
+      <div class="bench-insight">✦ Referente en flujo de registro rápido. Debilidad: demasiado orientado a contadores.</div>
+    </div>
+    <div class="bench-card">
+      <div class="bench-name">Fintual</div>
+      <div class="bench-type">Inversiones · Chile/México</div>
+      <div class="bench-row"><span class="bench-attr">Onboarding</span><span class="bench-val val-good">Excelente</span></div>
+      <div class="bench-row"><span class="bench-attr">Lenguaje</span><span class="bench-val val-good">Empático</span></div>
+      <div class="bench-row"><span class="bench-attr">Mobile UX</span><span class="bench-val val-good">Muy bueno</span></div>
+      <div class="bench-row"><span class="bench-attr">Feedback visual</span><span class="bench-val val-good">Rico</span></div>
+      <div class="bench-insight">✦ Mejor referente en UX Writing empático. Traduce conceptos complejos a lenguaje cotidiano.</div>
+    </div>
+    <div class="bench-card">
+      <div class="bench-name">Contabilium</div>
+      <div class="bench-type">Contabilidad · Argentina</div>
+      <div class="bench-row"><span class="bench-attr">Onboarding</span><span class="bench-val val-bad">Sin guía</span></div>
+      <div class="bench-row"><span class="bench-attr">Lenguaje</span><span class="bench-val val-bad">Muy técnico</span></div>
+      <div class="bench-row"><span class="bench-attr">Mobile UX</span><span class="bench-val val-mid">Regular</span></div>
+      <div class="bench-row"><span class="bench-attr">Feedback visual</span><span class="bench-val val-bad">Escaso</span></div>
+      <div class="bench-insight">✦ Referente negativo: modelo a evitar para usuarias con baja alfabetización digital.</div>
+    </div>
+    <div class="bench-card">
+      <div class="bench-name">Klar</div>
+      <div class="bench-type">Finanzas personales · México</div>
+      <div class="bench-row"><span class="bench-attr">Onboarding</span><span class="bench-val val-good">Muy guiado</span></div>
+      <div class="bench-row"><span class="bench-attr">Lenguaje</span><span class="bench-val val-good">Cotidiano</span></div>
+      <div class="bench-row"><span class="bench-attr">Mobile UX</span><span class="bench-val val-good">Excelente</span></div>
+      <div class="bench-row"><span class="bench-attr">Feedback visual</span><span class="bench-val val-good">Animado</span></div>
+      <div class="bench-insight">✦ Referente en microinteracciones y tono de voz cercano. Adaptar a contexto de negocio.</div>
+    </div>
+    <div class="bench-card">
+      <div class="bench-name">Nubank</div>
+      <div class="bench-type">Neobank · Brasil/LATAM</div>
+      <div class="bench-row"><span class="bench-attr">Onboarding</span><span class="bench-val val-good">Impecable</span></div>
+      <div class="bench-row"><span class="bench-attr">Lenguaje</span><span class="bench-val val-good">Simple</span></div>
+      <div class="bench-row"><span class="bench-attr">Mobile UX</span><span class="bench-val val-good">Referente</span></div>
+      <div class="bench-row"><span class="bench-attr">Feedback visual</span><span class="bench-val val-good">Excelente</span></div>
+      <div class="bench-insight">✦ Benchmark de clase mundial en simplicidad. Base para los patrones de interacción del rediseño.</div>
+    </div>
+    <div class="bench-card">
+      <div class="bench-name">Nequi</div>
+      <div class="bench-type">Billetera digital · Colombia</div>
+      <div class="bench-row"><span class="bench-attr">Onboarding</span><span class="bench-val val-good">Guiado</span></div>
+      <div class="bench-row"><span class="bench-attr">Lenguaje</span><span class="bench-val val-good">Muy cercano</span></div>
+      <div class="bench-row"><span class="bench-attr">Mobile UX</span><span class="bench-val val-good">Muy bueno</span></div>
+      <div class="bench-row"><span class="bench-attr">Feedback visual</span><span class="bench-val val-good">Rico</span></div>
+      <div class="bench-insight">✦ Referente de tono de voz para el target. El usuario "ya conoce" este estilo de app.</div>
+    </div>
+  </div>
+</div>
+
+<!-- UX WRITING -->
+<div class="section">
+  <div class="section-label">Estrategia de UX Writing — Diccionario de traducción empática</div>
+  <div class="writing-list">
+    <div class="writing-item">
+      <span class="writing-before">Flujo de caja</span>
+      <span class="writing-arrow">→</span>
+      <span class="writing-after">¿Cuánto entra y cuánto sale?</span>
+      <span class="writing-why">Pregunta directa, responde lo que la usuaria realmente necesita saber</span>
+    </div>
+    <div class="writing-item">
+      <span class="writing-before">Egreso / Gasto</span>
+      <span class="writing-arrow">→</span>
+      <span class="writing-after">Lo que gasté hoy</span>
+      <span class="writing-why">Ancla en el tiempo presente, elimina ambigüedad contable</span>
+    </div>
+    <div class="writing-item">
+      <span class="writing-before">Ingreso / Venta</span>
+      <span class="writing-arrow">→</span>
+      <span class="writing-after">Lo que gané hoy</span>
+      <span class="writing-why">Positivo y motivador, conecta con el esfuerzo personal</span>
+    </div>
+    <div class="writing-item">
+      <span class="writing-before">Rentabilidad</span>
+      <span class="writing-arrow">→</span>
+      <span class="writing-after">¿Tu negocio está ganando?</span>
+      <span class="writing-why">Convierte un KPI técnico en una pregunta que la usuaria ya se hace</span>
+    </div>
+    <div class="writing-item">
+      <span class="writing-before">Saldo disponible</span>
+      <span class="writing-arrow">→</span>
+      <span class="writing-after">Lo que tienes ahora</span>
+      <span class="writing-why">Elimina "disponible" — para la usuaria, si está, está</span>
+    </div>
+    <div class="writing-item">
+      <span class="writing-before">Registrar transacción</span>
+      <span class="writing-arrow">→</span>
+      <span class="writing-after">Anotar venta o gasto</span>
+      <span class="writing-why">"Anotar" es el verbo que ya usan con su cuaderno físico</span>
+    </div>
+    <div class="writing-item">
+      <span class="writing-before">Período fiscal</span>
+      <span class="writing-arrow">→</span>
+      <span class="writing-after">Esta semana / Este mes</span>
+      <span class="writing-why">Tiempo relativo, anclado a cómo piensan su negocio</span>
+    </div>
+    <div class="writing-item">
+      <span class="writing-before">Categoría de gasto</span>
+      <span class="writing-arrow">→</span>
+      <span class="writing-after">¿En qué gastaste?</span>
+      <span class="writing-why">Conversacional; la categoría es la respuesta, no el campo</span>
+    </div>
+  </div>
+</div>
+
+<!-- HMW -->
+<div class="section">
+  <div class="section-label">Preguntas "¿Cómo podríamos...?" — HMW para la fase de ideación</div>
+  <div class="hmw-list">
+    <div class="hmw-card">
+      <div class="hmw-label">HMW 01</div>
+      <div class="hmw-text">¿Cómo podríamos reducir el registro de una venta a menos de 20 segundos sin perder información clave?</div>
+    </div>
+    <div class="hmw-card">
+      <div class="hmw-label">HMW 02</div>
+      <div class="hmw-text">¿Cómo podríamos mostrar la salud financiera del negocio con un solo vistazo, sin que la usuaria tenga que interpretar números?</div>
+    </div>
+    <div class="hmw-card">
+      <div class="hmw-label">HMW 03</div>
+      <div class="hmw-text">¿Cómo podríamos hacer que el primer registro exitoso genere un momento de orgullo que motive el regreso diario?</div>
+    </div>
+    <div class="hmw-card">
+      <div class="hmw-label">HMW 04</div>
+      <div class="hmw-text">¿Cómo podríamos usar lenguaje cotidiano en cada pantalla sin que parezca informal o poco confiable?</div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-bottom">
+  <button class="btn btn-primary" onclick="sendPrompt('Desarrolla la Fase 3: Ideación y Prototipado del case study de Colmena, con arquitectura de información, wireframes del flujo rediseñado y sistema de gamificación liviana')">Continuar → Fase 3</button>
+  <button class="btn btn-secondary" onclick="sendPrompt('Muéstrame el benchmark de UX Writing de Fintual y Nubank en detalle para el case study de Colmena')">Profundizar benchmark</button>
+</div>
+
+</div>

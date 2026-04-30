@@ -1,0 +1,195 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --honey:#C8862A;--honey-light:#f7ba40;--honey-mid:#E5C07B;
+    --teal:#1A6B5A;--teal-light:#D4EDE7;
+    --coral:#C84B2F;--coral-light:#F5DDD7;
+    --text:#1A1A18;--text-muted:#5A5A54;--text-hint:#9A9A92;
+    --bg:#FAFAF7;--surface:#FFFFFF;--border:rgba(26,26,24,0.1);
+  }
+  @media(prefers-color-scheme:dark){
+    :root{
+      --honey:#E5A83C;--honey-light:#3A2A0A;--honey-mid:#7A5A1A;
+      --teal:#4ABFA0;--teal-light:#0A2520;
+      --coral:#E86A4A;--coral-light:#3A1A10;
+      --text:#bdbd0a;--text-muted:#9A9A92;--text-hint:#5A5A54;
+      --bg:#1A1A18;--surface:#242420;--border:rgba(240,240,232,0.1);
+    }
+  }
+  body,#root{background:transparent;font-family:'DM Sans',sans-serif;color:var(--text);font-size:14px;line-height:1.6}
+
+  .hero{padding:2rem 0 1.5rem;border-bottom:0.5px solid var(--border)}
+  .hero-tag{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--honey);margin-bottom:0.75rem}
+  .hero-title{font-family:'DM Serif Display',serif;font-size:2rem;line-height:1.15;color:var(--text);margin-bottom:0.5rem}
+  .hero-title em{font-style:italic;color:var(--honey)}
+  .hero-sub{font-size:13px;color:var(--text-muted);max-width:520px}
+  .hero-meta{display:flex;gap:1.5rem;margin-top:1.25rem;flex-wrap:wrap}
+  .meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)}
+  .meta-dot{width:7px;height:7px;border-radius:50%}
+
+  .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:1.5rem 0;border-bottom:0.5px solid var(--border)}
+  .kpi{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem}
+  .kpi-val{font-family:'DM Serif Display',serif;font-size:1.75rem;line-height:1;color:var(--text);margin-bottom:2px}
+  .kpi-label{font-size:11px;color:var(--text-muted)}
+
+  .section{padding:1.5rem 0;border-bottom:0.5px solid var(--border)}
+  .section-title{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-hint);margin-bottom:1rem}
+
+  .challenge-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .challenge-card{background:var(--coral-light);border-radius:10px;padding:0.875rem 1rem;border:0.5px solid rgba(200,75,47,0.15)}
+  .challenge-card .icon-line{width:20px;height:2px;background:var(--coral);border-radius:1px;margin-bottom:0.5rem}
+  .challenge-card p{font-size:13px;color:var(--text);line-height:1.45}
+
+  .phases{display:flex;flex-direction:column;gap:8px}
+  .phase-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:0.875rem 1rem;background:var(--surface);border:0.5px solid var(--border);border-radius:10px;cursor:pointer;transition:border-color 0.15s}
+  .phase-row:hover{border-color:var(--honey)}
+  .phase-num{font-family:'DM Serif Display',serif;font-size:1.25rem;color:var(--honey);min-width:28px}
+  .phase-name{font-size:13px;font-weight:500;color:var(--text)}
+  .phase-tag{font-size:11px;color:var(--text-muted)}
+  .phase-badge{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
+  .badge-research{background:var(--teal-light);color:var(--teal)}
+  .badge-strategy{background:var(--honey-light);color:var(--honey)}
+  .badge-design{background:var(--coral-light);color:var(--coral)}
+
+  .value-strip{background:var(--honey-light);border-radius:12px;padding:1.25rem 1.5rem;border:0.5px solid rgba(200,134,42,0.2);margin-top:0;display:flex;align-items:flex-start;gap:1rem}
+  .value-strip .accent-line{width:3px;min-height:60px;background:var(--honey);border-radius:2px;flex-shrink:0}
+  .value-strip p{font-size:13px;color:var(--text-muted);line-height:1.55}
+  .value-strip strong{font-weight:500;color:var(--text)}
+
+  .tools-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:0.5rem}
+  .tool-chip{font-size:11px;padding:4px 10px;border-radius:20px;border:0.5px solid var(--border);color:var(--text-muted);background:var(--surface)}
+
+  .bottom-cta{padding:1.5rem 0 0.5rem;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{font-size:13px;font-weight:500;padding:8px 18px;border-radius:8px;border:none;cursor:pointer;transition:opacity 0.15s}
+  .btn-primary{background:var(--honey);color:#fff}
+  .btn-primary:hover{opacity:0.88}
+  .btn-secondary{background:var(--surface);color:var(--text);border:0.5px solid var(--border)}
+  .btn-secondary:hover{border-color:var(--honey)}
+</style>
+
+<div style="padding:0 0.25rem">
+  <div class="hero">
+    <div class="hero-tag">Case study · UX/UI Redesign · 2026
+    </div>
+    <h1 class="hero-title">Módulo de <em>Salud Financiera</em><br>— Colmena / Sustentia</h1>
+    <p class="hero-sub">Rediseño de la experiencia de registro financiero para microempresarias latinoamericanas con baja alfabetización digital, bajo la metodología Design Thinking.</p>
+    <div class="hero-meta">
+      <div class="meta-pill"><div class="meta-dot" style="background:var(--teal)"></div>Microfinanzas · Impacto social</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:var(--honey)"></div>5 fases · Design Thinking</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:var(--coral)"></div>Mobile-first · WCAG AA</div>
+    </div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-val">5</div>
+      <div class="kpi-label">Fases de diseño completadas</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">3+</div>
+      <div class="kpi-label">Rondas de usability testing</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">1</div>
+      <div class="kpi-label">Sistema de diseño escalable</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Problema central</div>
+    <div class="challenge-grid">
+      <div class="challenge-card">
+        <div class="icon-line"></div>
+        <p>Lenguaje financiero técnico genera fricción y abandono en usuarias con baja alfabetización digital.</p>
+      </div>
+      <div class="challenge-card">
+        <div class="icon-line"></div>
+        <p>El flujo de registro de ingresos y egresos no genera valor inmediato ni hábito de uso.</p>
+      </div>
+      <div class="challenge-card">
+        <div class="icon-line"></div>
+        <p>Interfaz no optimizada para dispositivos móviles de gama media en entornos con luz intensa.</p>
+      </div>
+      <div class="challenge-card">
+        <div class="icon-line"></div>
+        <p>Sin indicadores de salud financiera que motiven la toma de decisiones basada en datos.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Plan de ejecución por fases</div>
+    <div class="phases">
+      <div class="phase-row" onclick="sendPrompt('Desarrolla la Fase 1: Empatía e Investigación del case study de Colmena, incluyendo proto-personas, mapa de empatía y auditoría UX')">
+        <div class="phase-num">01</div>
+        <div>
+          <div class="phase-name">Empatía e Investigación</div>
+          <div class="phase-tag">Auditoría UX · Proto-personas · Entrevistas de guerrilla</div>
+        </div>
+        <span class="phase-badge badge-research">Research</span>
+      </div>
+      <div class="phase-row" onclick="sendPrompt('Desarrolla la Fase 2: Definición y Estrategia del case study de Colmena, con user journey map, benchmark competitivo y estrategia de UX Writing')">
+        <div class="phase-num">02</div>
+        <div>
+          <div class="phase-name">Definición y Estrategia</div>
+          <div class="phase-tag">User journey · Benchmark · UX Writing</div>
+        </div>
+        <span class="phase-badge badge-strategy">Estrategia</span>
+      </div>
+      <div class="phase-row" onclick="sendPrompt('Desarrolla la Fase 3: Ideación y Prototipado del case study de Colmena, con arquitectura de información, wireframes y gamificación')">
+        <div class="phase-num">03</div>
+        <div>
+          <div class="phase-name">Ideación y Prototipado</div>
+          <div class="phase-tag">IA · Wireframes · Gamificación liviana</div>
+        </div>
+        <span class="phase-badge badge-strategy">Ideación</span>
+      </div>
+      <div class="phase-row" onclick="sendPrompt('Desarrolla la Fase 4: Diseño Visual y Sistema de Diseño del case study de Colmena, con componentes atómicos, mobile-first y accesibilidad WCAG')">
+        <div class="phase-num">04</div>
+        <div>
+          <div class="phase-name">Diseño Visual y Sistema</div>
+          <div class="phase-tag">Atomic design · Mobile-first · Accesibilidad</div>
+        </div>
+        <span class="phase-badge badge-design">Diseño</span>
+      </div>
+      <div class="phase-row" onclick="sendPrompt('Desarrolla la Fase 5: Validación y Testing del case study de Colmena, con pruebas en Maze, síntesis de hallazgos y handoff de diseño')">
+        <div class="phase-num">05</div>
+        <div>
+          <div class="phase-name">Validación y Testing</div>
+          <div class="phase-tag">Maze · Síntesis de insights · Handoff</div>
+        </div>
+        <span class="phase-badge badge-research">Testing</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Stack de herramientas</div>
+    <div class="tools-wrap">
+      <span class="tool-chip">Figma</span>
+      <span class="tool-chip">Maze</span>
+      <span class="tool-chip">Notion</span>
+      <span class="tool-chip">Claude (LLM)</span>
+      <span class="tool-chip">Miro</span>
+      <span class="tool-chip">WCAG 2.1</span>
+      <span class="tool-chip">Atomic Design</span>
+      <span class="tool-chip">Design Thinking</span>
+      <span class="tool-chip">UX Writing</span>
+    </div>
+  </div>
+
+  <div class="section" style="border-bottom:none">
+    <div class="section-title">Valor diferencial</div>
+    <div class="value-strip">
+      <div class="accent-line"></div>
+      <p><strong>Perspectiva de Ingeniería Industrial:</strong> el foco no es solo estético, sino la <strong>eficiencia operativa</strong> del módulo. Usando IA y flujos optimizados, se entregan prototipos funcionales que permiten al equipo validar la lógica de negocio antes del desarrollo completo.</p>
+    </div>
+  </div>
+
+  <div class="bottom-cta">
+    <button class="btn btn-primary" onclick="sendPrompt('Desarrolla la Fase 1: Empatía e Investigación del case study de Colmena, incluyendo proto-personas, mapa de empatía y auditoría UX')">Comenzar con Fase 1 →</button>
+    <button class="btn btn-secondary" onclick="sendPrompt('Muéstrame el diseño hi-fi del dashboard de salud financiera de Colmena')">Ver diseño hi-fi</button>
+  </div>
+</div>

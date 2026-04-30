@@ -1,0 +1,9 @@
+# Dependencias
+node_modules/
+.angular/
+dist/
+
+# Logs y archivos temporales
+npm-debug.log*
+.DS_Store
+.cursor/
