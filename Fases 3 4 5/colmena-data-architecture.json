@@ -1,0 +1,407 @@
+/**
+ * ============================================================
+ * COLMENA — Módulo de Salud Financiera
+ * Arquitectura de Datos Dinámica v1.0
+ * Fase 3, Etapa 1 — Fuente de verdad para registro de movimientos
+ * ============================================================
+ *
+ * COMPORTAMIENTO #1 — Retroalimentación Inmediata:
+ * Cada categoría expone `limite_sugerido`, `umbral_porcentaje`
+ * y `tipo_alerta` para que el componente evalúe en tiempo real
+ * si el gasto acumulado supera el límite y dispare el feedback
+ * correcto ANTES de que la usuaria guarde el registro.
+ * ============================================================
+ */
+
+{
+  "version": "1.0.0",
+  "modulo": "salud_financiera",
+  "descripcion": "Estructura de datos para el registro de movimientos financieros de microempresarias",
+
+  /**
+   * METADATOS GLOBALES
+   * Configuración de periodos y estado del módulo
+   */
+  "config_global": {
+    "periodo_activo": "mensual",
+    "moneda": "MXN",
+    "dias_habiles_mes": 22,
+    "meta_registro_consecutivo": 5,
+    "umbral_salud_verde": 70,
+    "umbral_salud_amarillo": 40
+  },
+
+  /**
+   * REGISTRO DE MOVIMIENTO — Schema base
+   * Estructura de cada transacción individual
+   */
+  "schema_movimiento": {
+    "id": "string:uuid",
+    "fecha": "string:ISO8601",
+    "tipo": "egreso | ingreso",
+    "categoria_id": "string:ref->categorias",
+    "subcategoria_id": "string:ref->subcategorias",
+    "monto": "number:float",
+    "descripcion": "string:optional",
+    "comprobante_url": "string:url:optional",
+    "origen": "manual | voz | foto_ticket",
+    "estado": "borrador | confirmado",
+
+    /* Gamificación: marca si este registro suma al streak */
+    "suma_al_streak": "boolean"
+  },
+
+  /**
+   * ============================================================
+   * TAXONOMÍA DE GASTOS — 3 Categorías Principales
+   * ============================================================
+   */
+  "categorias": [
+
+    /**
+     * ─────────────────────────────────────────
+     * CATEGORÍA 1: GASTOS OPERATIVOS (Variables)
+     * Dependen directamente de la producción o venta
+     * ─────────────────────────────────────────
+     */
+    {
+      "id": "cat_operativos",
+      "nombre": "Gastos Operativos",
+      "descripcion": "Lo que gastas para que tu negocio funcione cada día",
+      "icono": "briefcase",
+      "color_token": "primary",       /* → DaisyUI: text-primary / bg-primary */
+      "tipo": "variable",
+
+      /* Validación — Comportamiento #1 */
+      "limite_sugerido": {
+        "tipo": "porcentaje_de_ingresos",
+        "valor": 40,
+        "descripcion": "Máximo 40% de tus ingresos del mes"
+      },
+      "tipo_alerta": {
+        "nivel_advertencia": "warning",   /* → DaisyUI: alert-warning (amarillo) */
+        "nivel_critico": "error",         /* → DaisyUI: alert-error (rojo)       */
+        "umbral_advertencia_pct": 80,     /* Dispara warning al llegar al 80% del límite */
+        "umbral_critico_pct": 100,        /* Dispara error al superar el límite   */
+        "mensaje_advertencia": "Llevas el {pct}% de tu presupuesto operativo",
+        "mensaje_critico": "¡Superaste tu límite operativo este mes!"
+      },
+
+      /* Triggers de Gamificación */
+      "gamificacion": {
+        "mini_reto_id": "reto_operativos_control",
+        "condicion_logro": "mantener_bajo_limite_dias",
+        "dias_requeridos": 7,
+        "recompensa_badge": "badge_control_operativo",
+        "descripcion_reto": "Mantén tus gastos operativos bajo control por 7 días"
+      },
+
+      "subcategorias": [
+        {
+          "id": "sub_materia_prima",
+          "nombre": "Materia Prima",
+          "descripcion": "Insumos básicos para tu producto",
+          "icono": "package",
+          "limite_sugerido_monto": null,     /* Se calcula como % del ingreso */
+          "requiere_comprobante": false,
+          "trigger_feedback": {
+            "campo_observado": "monto_acumulado_mes",
+            "umbral_pct_de_categoria": 50,   /* Alerta si MP es >50% de operativos */
+            "mensaje": "Tu materia prima es más de la mitad de tus costos operativos"
+          }
+        },
+        {
+          "id": "sub_servicios_negocio",
+          "nombre": "Servicios del Negocio",
+          "descripcion": "Luz, agua o gas del negocio (no del hogar)",
+          "icono": "zap",
+          "limite_sugerido_monto": null,
+          "requiere_comprobante": true,
+          "trigger_feedback": {
+            "campo_observado": "variacion_mes_anterior_pct",
+            "umbral_pct_de_categoria": 20,
+            "mensaje": "Tus servicios subieron un {pct}% respecto al mes pasado"
+          }
+        },
+        {
+          "id": "sub_transporte_logistica",
+          "nombre": "Transporte y Logística",
+          "descripcion": "Entregas, fletes, surtido de inventario",
+          "icono": "truck",
+          "limite_sugerido_monto": null,
+          "requiere_comprobante": false,
+          "trigger_feedback": {
+            "campo_observado": "frecuencia_registros_semana",
+            "umbral_pct_de_categoria": null,
+            "mensaje": "Registras muchos gastos de transporte, ¿podrías consolidar entregas?"
+          }
+        }
+      ]
+    },
+
+    /**
+     * ─────────────────────────────────────────
+     * CATEGORÍA 2: GASTOS FIJOS (Estructurales)
+     * Pagos que ocurren sin importar las ventas
+     * ─────────────────────────────────────────
+     */
+    {
+      "id": "cat_fijos",
+      "nombre": "Gastos Fijos",
+      "descripcion": "Lo que pagas aunque no vendas nada",
+      "icono": "home",
+      "color_token": "secondary",     /* → DaisyUI: text-secondary / bg-secondary */
+      "tipo": "fijo",
+
+      /* Validación — Comportamiento #1 */
+      "limite_sugerido": {
+        "tipo": "monto_fijo_mensual",
+        "valor": null,                  /* La usuaria define su propio límite al configurar */
+        "descripcion": "Define cuánto puedes pagar de gastos fijos cada mes"
+      },
+      "tipo_alerta": {
+        "nivel_advertencia": "info",    /* → DaisyUI: alert-info (azul)    */
+        "nivel_critico": "warning",     /* → DaisyUI: alert-warning        */
+        "umbral_advertencia_pct": 90,
+        "umbral_critico_pct": 100,
+        "mensaje_advertencia": "Ya comprometiste el {pct}% de tu presupuesto fijo",
+        "mensaje_critico": "Tus gastos fijos superaron el presupuesto. ¿Necesitas ajustar algo?"
+      },
+
+      /* Triggers de Gamificación */
+      "gamificacion": {
+        "mini_reto_id": "reto_fijos_registro",
+        "condicion_logro": "registro_puntual_inicio_mes",
+        "dias_requeridos": 3,           /* Registra todos los fijos en los primeros 3 días del mes */
+        "recompensa_badge": "badge_negocio_ordenado",
+        "descripcion_reto": "Registra todos tus gastos fijos antes del día 3 del mes"
+      },
+
+      "subcategorias": [
+        {
+          "id": "sub_renta",
+          "nombre": "Renta",
+          "descripcion": "Pago del local o espacio de trabajo",
+          "icono": "map-pin",
+          "limite_sugerido_monto": null,
+          "requiere_comprobante": true,
+          "trigger_feedback": {
+            "campo_observado": "monto_vs_ingresos_pct",
+            "umbral_pct_de_categoria": 30,
+            "mensaje": "Tu renta representa el {pct}% de tus ingresos. Lo ideal es menos del 30%"
+          }
+        },
+        {
+          "id": "sub_conectividad",
+          "nombre": "Conectividad",
+          "descripcion": "Internet y telefonía para la operación",
+          "icono": "wifi",
+          "limite_sugerido_monto": 800,  /* MXN — referencia de mercado */
+          "requiere_comprobante": false,
+          "trigger_feedback": {
+            "campo_observado": "monto",
+            "umbral_pct_de_categoria": null,
+            "mensaje": "¿Revisaste si hay un plan más económico que se adapte a tu negocio?"
+          }
+        },
+        {
+          "id": "sub_sueldos_autopago",
+          "nombre": "Sueldos y Auto-pago",
+          "descripcion": "Tu salario y el de tus colaboradoras",
+          "icono": "users",
+          "limite_sugerido_monto": null,
+          "requiere_comprobante": false,
+          "es_critico": true,            /* Campo crítico — separación negocio/hogar */
+          "trigger_feedback": {
+            "campo_observado": "tiene_autopago_registrado",
+            "umbral_pct_de_categoria": null,
+            "mensaje": "Recuerda pagarte a ti misma — es la base de un negocio sano"
+          }
+        }
+      ]
+    },
+
+    /**
+     * ─────────────────────────────────────────
+     * CATEGORÍA 3: GASTOS HORMIGA Y PERSONALES
+     * Control de fugas — separación negocio/hogar
+     * Esta categoría es CRÍTICA para el objetivo central del módulo
+     * ─────────────────────────────────────────
+     */
+    {
+      "id": "cat_hormiga",
+      "nombre": "Gastos Hormiga y Personales",
+      "descripcion": "Los pequeños gastos que se 'comen' tu negocio sin que te des cuenta",
+      "icono": "alert-triangle",
+      "color_token": "accent",         /* → DaisyUI: text-accent / bg-accent */
+      "tipo": "fuga",
+      "es_categoria_critica": true,
+
+      /* Validación — Comportamiento #1 */
+      "limite_sugerido": {
+        "tipo": "monto_fijo_mensual",
+        "valor": null,
+        "descripcion": "Define un tope semanal para estos gastos",
+        "granularidad_recomendada": "semanal"
+      },
+      "tipo_alerta": {
+        "nivel_advertencia": "warning",  /* → DaisyUI: alert-warning */
+        "nivel_critico": "error",        /* → DaisyUI: alert-error   */
+        "umbral_advertencia_pct": 70,
+        "umbral_critico_pct": 100,
+        "persistencia_alerta": true,     /* Comportamiento #2: alerta NO desaparece sola */
+        "requiere_confirmacion_lectura": true,
+        "mensaje_advertencia": "¡Ojo! Llevas {monto} en gastos personales esta semana",
+        "mensaje_critico": "Tu negocio está financiando gastos del hogar. Hablemos de eso 👀"
+      },
+
+      /* Triggers de Gamificación — Mayor peso en esta categoría */
+      "gamificacion": {
+        "mini_reto_id": "reto_hormiga_conciencia",
+        "condicion_logro": "registro_consecutivo_dias",
+        "dias_requeridos": 5,            /* ← Trigger especificado en el brief */
+        "campo_trigger": "registro_consecutivo_dias",
+        "recompensa_badge": "badge_separacion_financiera",
+        "xp_por_registro": 10,
+        "xp_bonus_streak_5_dias": 50,
+        "descripcion_reto": "Registra tus gastos personales 5 días seguidos — la consciencia es el primer paso"
+      },
+
+      "subcategorias": [
+        {
+          "id": "sub_antojos_diarios",
+          "nombre": "Antojos y Gastos del Día",
+          "descripcion": "Cafés, comidas, compras no planificadas",
+          "icono": "coffee",
+          "limite_sugerido_monto": null,
+          "requiere_comprobante": false,
+          "entrada_rapida": true,        /* UI: botón de registro rápido con monto */
+          "trigger_feedback": {
+            "campo_observado": "frecuencia_dia",
+            "umbral_registros_dia": 3,
+            "mensaje": "Hoy ya llevas {n} gastos pequeños. ¿Vas a revisarlos?"
+          }
+        },
+        {
+          "id": "sub_gastos_familiares",
+          "nombre": "Gastos Familiares",
+          "descripcion": "Retiros para despensa, escuela u hogar",
+          "icono": "heart",
+          "limite_sugerido_monto": null,
+          "requiere_comprobante": false,
+          "es_critico": true,
+          "trigger_feedback": {
+            "campo_observado": "monto_acumulado_mes",
+            "umbral_pct_de_ingresos": 15,
+            "mensaje": "El {pct}% de tus ingresos fue al hogar este mes. Definamos un límite juntas"
+          }
+        }
+      ]
+    }
+  ],
+
+  /**
+   * ============================================================
+   * SISTEMA DE GAMIFICACIÓN — Definición de Mini-Retos
+   * ============================================================
+   */
+  "gamificacion": {
+
+    /* Estado del jugador — persiste por usuaria */
+    "estado_usuaria": {
+      "registro_consecutivo_dias": "number:int",     /* Streak activo */
+      "ultimo_registro_fecha": "string:ISO8601",
+      "xp_total": "number:int",
+      "badges_obtenidos": "array:string",
+      "nivel_actual": "number:int"
+    },
+
+    /* Reglas de streak */
+    "reglas_streak": {
+      "campo_trigger": "registro_consecutivo_dias",
+      "hito_1": { "dias": 3, "xp": 20, "mensaje": "¡3 días seguidos! Tu negocio te lo va a agradecer" },
+      "hito_2": { "dias": 5, "xp": 50, "badge": "badge_constancia", "mensaje": "¡Una semana de hábito! Eres imparable" },
+      "hito_3": { "dias": 14, "xp": 150, "badge": "badge_maestra_registros", "mensaje": "2 semanas — ya tienes datos reales de tu negocio" },
+      "hito_4": { "dias": 30, "xp": 500, "badge": "badge_emprendedora_financiera", "mensaje": "Un mes completo. Tu Salud Financiera está activa" },
+      "penalizacion_ruptura_streak": { "dias_gracia": 1, "mensaje_recuperacion": "Puedes recuperar tu racha si registras hoy" }
+    },
+
+    /* Mini-retos activos */
+    "mini_retos": [
+      {
+        "id": "reto_primer_registro",
+        "nombre": "Tu primer registro",
+        "descripcion": "Registra tu primer movimiento del mes",
+        "condicion": { "tipo": "primer_registro_mes", "valor": 1 },
+        "xp": 15,
+        "badge": null
+      },
+      {
+        "id": "reto_hormiga_conciencia",
+        "nombre": "Sin fugas 5 días",
+        "descripcion": "Registra tus gastos personales 5 días consecutivos",
+        "condicion": { "tipo": "registro_consecutivo_dias", "valor": 5, "categoria_id": "cat_hormiga" },
+        "xp": 50,
+        "badge": "badge_separacion_financiera"
+      },
+      {
+        "id": "reto_operativos_control",
+        "nombre": "Operativos en verde",
+        "descripcion": "Mantén tus gastos operativos bajo el límite 7 días",
+        "condicion": { "tipo": "mantener_bajo_limite_dias", "valor": 7, "categoria_id": "cat_operativos" },
+        "xp": 80,
+        "badge": "badge_control_operativo"
+      },
+      {
+        "id": "reto_fijos_registro",
+        "nombre": "Orden desde el inicio",
+        "descripcion": "Registra todos los gastos fijos antes del día 3 del mes",
+        "condicion": { "tipo": "registro_puntual_inicio_mes", "valor": 3 },
+        "xp": 30,
+        "badge": "badge_negocio_ordenado"
+      }
+    ]
+  },
+
+  /**
+   * ============================================================
+   * SEMÁFORO DE SALUD FINANCIERA
+   * Cálculo global basado en todas las categorías
+   * ============================================================
+   */
+  "semaforo_salud": {
+    "descripcion": "Indicador global calculado al final de cada registro",
+    "estados": [
+      {
+        "id": "verde",
+        "label": "Tu negocio está sano",
+        "condicion": "score >= 70",
+        "color_token": "success",      /* → DaisyUI: badge-success / text-success */
+        "icono": "trending-up"
+      },
+      {
+        "id": "amarillo",
+        "label": "Hay áreas de oportunidad",
+        "condicion": "score >= 40 && score < 70",
+        "color_token": "warning",      /* → DaisyUI: badge-warning / text-warning */
+        "icono": "alert-circle"
+      },
+      {
+        "id": "rojo",
+        "label": "Tu negocio necesita atención",
+        "condicion": "score < 40",
+        "color_token": "error",        /* → DaisyUI: badge-error / text-error     */
+        "icono": "alert-triangle",
+        "persistencia_alerta": true    /* Comportamiento #2: no desaparece sola   */
+      }
+    ],
+    "formula_score": {
+      "descripcion": "Puntuación 0-100 basada en 3 factores",
+      "factores": [
+        { "nombre": "control_operativos", "peso": 0.35, "fuente": "cat_operativos.limite_sugerido" },
+        { "nombre": "registro_constancia", "peso": 0.35, "fuente": "gamificacion.estado_usuaria.registro_consecutivo_dias" },
+        { "nombre": "control_fugas", "peso": 0.30, "fuente": "cat_hormiga.limite_sugerido" }
+      ]
+    }
+  }
+}
