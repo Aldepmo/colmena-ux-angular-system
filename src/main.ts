@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { ExecutiveSummaryComponent } from './app/pages/executive-summary.component';
 import { Fase1ResearchComponent } from './app/pages/fase1-research.component';
 import { Fase2DefinicionComponent } from './app/pages/fase2-definicion.component';
+import { SaludFinancieraComponent } from './app/pages/salud-financiera.component';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ import { Fase2DefinicionComponent } from './app/pages/fase2-definicion.component
             <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Resumen</a></li>
             <li><a routerLink="/fase-1" routerLinkActive="active">Fase 1</a></li>
             <li><a routerLink="/fase-2" routerLinkActive="active">Fase 2</a></li>
+            <li><a routerLink="/salud-financiera" routerLinkActive="active" class="text-primary font-semibold">Salud Financiera</a></li>
           </ul>
         </div>
       </header>
@@ -38,6 +40,7 @@ bootstrapApplication(AppComponent, {
       { path: '', component: ExecutiveSummaryComponent },
       { path: 'fase-1', component: Fase1ResearchComponent },
       { path: 'fase-2', component: Fase2DefinicionComponent },
+      { path: 'salud-financiera', component: SaludFinancieraComponent },
     ]),
   ],
 }).catch((error) => console.error(error));
