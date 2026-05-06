@@ -12,7 +12,7 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
 @Component({
   selector: 'app-tarjeta-categoria',
   standalone: true,
-  imports: [CommonModule, FormsModule, BadgeComponent, ProgressBarComponent, ButtonComponent, InputComponent],
+  imports: [CommonModule, FormsModule, BadgeComponent, ProgressBarComponent],
   template: `
     <section
       class="card bg-base-100 shadow-xl border transition-all duration-500 hover:shadow-2xl hover:-translate-y-0.5"
@@ -254,10 +254,14 @@ export class TarjetaCategoriaComponent {
   getAlertaMensaje(): string {
     const estado = this.getEstado();
     const pct = this.pct();
+    const excedente = this.excedente();
     if (estado === 'critico') {
       return this.categoria.tipo_alerta.mensaje_critico;
     }
-    return this.categoria.tipo_alerta.mensaje_advertencia.replace('{pct}', pct.toString());
+    let msg = this.categoria.tipo_alerta.mensaje_advertencia;
+    msg = msg.replace('{pct}', pct.toString());
+    msg = msg.replace('{monto}', excedente.toString());
+    return msg;
   }
 
   getIcono(): string {
