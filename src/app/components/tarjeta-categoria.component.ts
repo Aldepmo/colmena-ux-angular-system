@@ -12,7 +12,7 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
 @Component({
   selector: 'app-tarjeta-categoria',
   standalone: true,
-  imports: [CommonModule, FormsModule, BadgeComponent, ProgressBarComponent],
+  imports: [CommonModule, FormsModule, BadgeComponent],
   template: `
     <section
       class="card bg-base-100 shadow-xl border transition-all duration-500 hover:shadow-2xl hover:-translate-y-0.5"
