@@ -5,11 +5,12 @@ import { ExecutiveSummaryComponent } from './app/pages/executive-summary.compone
 import { Fase1ResearchComponent } from './app/pages/fase1-research.component';
 import { Fase2DefinicionComponent } from './app/pages/fase2-definicion.component';
 import { SaludFinancieraComponent } from './app/pages/salud-financiera.component';
+import { ThemeToggleComponent } from './app/components/atoms/theme-toggle.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, ThemeToggleComponent],
   template: `
     <div class="min-h-screen bg-base-200 text-base-content">
       <header class="navbar border-b border-base-300 bg-base-100 px-6">
@@ -40,6 +41,7 @@ import { SaludFinancieraComponent } from './app/pages/salud-financiera.component
               </ul>
             }
           </div>
+          <app-theme-toggle />
         </div>
       </header>
 
