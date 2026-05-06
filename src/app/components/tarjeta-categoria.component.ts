@@ -36,6 +36,7 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
             {{ getEstado() === 'saludable' ? '✓' : getEstado() === 'advertencia' ? '⚠' : '🚨' }}
             {{ pct() }}%
           </div>
+        </div>
 
         <div class="flex items-end justify-between">
           <div>
@@ -53,6 +54,7 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
             }
           </div>
         </div>
+
         <div
           class="w-full bg-base-300 rounded-full h-2.5 overflow-hidden"
           role="progressbar"
@@ -142,7 +144,7 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
                 [attr.aria-label]="'Seleccionar subcategoría: ' + sub.nombre"
                 [class]="'flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold leading-tight cursor-pointer transition-all duration-200 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ' + getColorToken().border + ' ' + getColorToken().bg + ' text-base-content hover:shadow-md'"
               >
-                <span [attr.aria-hidden]="'true'">{{ getSubIcono(sub.icono) }}</span>
+                <span aria-hidden="true">{{ getSubIcono(sub.icono) }}</span>
                 <span>{{ sub.nombre }}</span>
               </button>
             }
