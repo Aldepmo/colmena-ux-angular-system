@@ -28,7 +28,7 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
             </div>
           </div>
           <div
-            [class]="'badge gap-1 shrink-0 text-xs font-semibold ' + getSemaforoBadgeClass()"
+            [class]="'insignia shrink-0 ' + getSemaforoBadgeClass()"
             role="status"
             [attr.aria-live]="getEstado() === 'critico' ? 'assertive' : 'polite'"
             [attr.aria-label]="'Estado de ' + categoria.nombre + ': ' + getEstadoLabel() + ', ' + pct() + ' por ciento'"
@@ -89,7 +89,7 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
               </button>
             }
             @if (categoria.tipo_alerta.persistencia_alerta && categoria.tipo_alerta.requiere_confirmacion_lectura) {
-              <span class="badge badge-outline badge-xs opacity-70">Requiere revisión</span>
+              <span class="insignia bg-base-200 border-base-300 text-base-content/70">⚠ Requiere revisión</span>
             }
           </div>
         }
@@ -136,13 +136,15 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
         @if (expandido()) {
           <div [attr.id]="'subcategorias-' + categoria.id" class="flex flex-wrap gap-2 pt-1" role="list" [attr.aria-label]="'Subcategorías de ' + categoria.nombre">
             @for (sub of categoria.subcategorias; track sub.id) {
-              <div
+              <button
+                type="button"
                 role="listitem"
-                [class]="'flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm font-semibold leading-tight ' + getColorToken().border + ' ' + getColorToken().bg + ' text-base-content'"
+                [attr.aria-label]="'Seleccionar subcategoría: ' + sub.nombre"
+                [class]="'flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold leading-tight cursor-pointer transition-all duration-200 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ' + getColorToken().border + ' ' + getColorToken().bg + ' text-base-content hover:shadow-md'"
               >
-                <span>{{ getSubIcono(sub.icono) }}</span>
-                {{ sub.nombre }}
-              </div>
+                <span [attr.aria-hidden]="'true'">{{ getSubIcono(sub.icono) }}</span>
+                <span>{{ sub.nombre }}</span>
+              </button>
             }
           </div>
         }
@@ -208,9 +210,9 @@ export class TarjetaCategoriaComponent {
 
   getSemaforoBadgeClass(): string {
     const estado = this.getEstado();
-    if (estado === 'critico') return 'badge badge-error';
-    if (estado === 'advertencia') return 'badge badge-warning';
-    return 'badge badge-success';
+    if (estado === 'critico') return 'insignia-critico';
+    if (estado === 'advertencia') return 'insignia-advertencia';
+    return 'insignia-saludable';
   }
 
   getEstadoLabel(): string {
