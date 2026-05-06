@@ -96,9 +96,9 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
           </div>
         }
 
-        <div class="flex gap-2 mt-3">
-          <div class="join flex-1">
-            <span aria-hidden="true" class="join-item flex items-center px-3 bg-base-200 text-base-content/70 text-sm border border-base-300 rounded-l-xl">
+        <div class="flex gap-2 mt-3 flex-wrap sm:flex-nowrap">
+          <div class="join flex-1 min-w-0">
+            <span aria-hidden="true" class="join-item flex items-center px-2 sm:px-3 bg-base-200 text-base-content/70 text-xs sm:text-sm border border-base-300 rounded-l-xl shrink-0">
               $
             </span>
             <input
@@ -109,14 +109,14 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
               [attr.aria-label]="'Monto a agregar en ' + categoria.nombre"
               inputmode="decimal"
               min="0"
-              class="input input-bordered input-sm flex-1 join-item text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus:border-primary"
+              class="input input-bordered input-sm flex-1 join-item text-xs sm:text-sm min-w-0"
             />
           </div>
           <button
             type="button"
             (click)="agregar()"
             [attr.aria-label]="'Agregar gasto en ' + categoria.nombre"
-            class="btn btn-primary btn-sm gap-1 rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            class="btn btn-primary btn-sm gap-1 rounded-xl shrink-0"
           >
             <span>+</span>
             Agregar

@@ -16,12 +16,12 @@ import { SaludFinancieraComponent } from './app/pages/salud-financiera.component
         <div class="navbar-start">
           <a class="text-lg font-semibold">Colmena Design System</a>
         </div>
-        <div class="navbar-center md:flex">
-          <ul class="menu menu-horizontal gap-2 px-1">
-            <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Resumen</a></li>
-            <li><a routerLink="/fase-1" routerLinkActive="active">Fase 1</a></li>
-            <li><a routerLink="/fase-2" routerLinkActive="active">Fase 2</a></li>
-            <li><a routerLink="/salud-financiera" routerLinkActive="active" class="text-primary font-semibold">Salud Financiera</a></li>
+        <div class="navbar-center lg:flex hidden">
+          <ul class="menu menu-horizontal gap-1 lg:gap-2 px-1">
+            <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="hidden lg:inline">Resumen</a></li>
+            <li><a routerLink="/fase-1" routerLinkActive="active" class="hidden lg:inline">Fase 1</a></li>
+            <li><a routerLink="/fase-2" routerLinkActive="active" class="hidden lg:inline">Fase 2</a></li>
+            <li><a routerLink="/salud-financiera" routerLinkActive="active" class="text-primary font-semibold hidden lg:inline">Salud Financiera</a></li>
           </ul>
         </div>
         <div class="navbar-end md:hidden">
