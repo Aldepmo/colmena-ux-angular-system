@@ -6,3 +6,24 @@ body {
   min-height: 100vh;
   background: #efebe0;
 }
+
+.badge {
+  @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+}
+
+.insignia {
+  @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-bold;
+  @apply border transition-all duration-200;
+}
+
+.insignia-saludable {
+  @apply bg-success/20 text-success border-success/30;
+}
+
+.insignia-advertencia {
+  @apply bg-warning/20 text-warning border-warning/30;
+}
+
+.insignia-critico {
+  @apply bg-error/20 text-error border-error/30;
+}
