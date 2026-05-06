@@ -17,6 +17,8 @@ import { SectionCardComponent } from '../components/section-card.component';
         tone="warning"
       />
 
+      <div class="h-6 md:h-8"></div>
+
       <app-section-card title="User journey map (flujo actual)">
         <div class="overflow-x-auto">
           <table class="table table-zebra">
@@ -44,6 +46,8 @@ import { SectionCardComponent } from '../components/section-card.component';
         </div>
       </app-section-card>
 
+      <div class="h-6 md:h-8"></div>
+
       <app-section-card title="Benchmark competitivo">
         <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           @for (item of benchmark; track item.name) {
@@ -57,6 +61,8 @@ import { SectionCardComponent } from '../components/section-card.component';
         </div>
       </app-section-card>
 
+      <div class="h-6 md:h-8"></div>
+
       <app-section-card title="Diccionario UX Writing">
         <div class="space-y-2">
           @for (entry of dictionary; track entry.from) {
@@ -68,6 +74,8 @@ import { SectionCardComponent } from '../components/section-card.component';
           }
         </div>
       </app-section-card>
+
+      <div class="h-6 md:h-8"></div>
 
       <app-section-card title="Preguntas HMW">
         <div class="grid gap-3 md:grid-cols-2">

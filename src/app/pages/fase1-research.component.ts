@@ -26,6 +26,8 @@ interface PersonaItem {
         tone="info"
       />
 
+      <div class="h-6 md:h-8"></div>
+
       <app-section-card title="Proto-personas">
         <div class="grid gap-4 md:grid-cols-2">
           @for (persona of personas; track persona.name) {
@@ -45,7 +47,9 @@ interface PersonaItem {
         </div>
       </app-section-card>
 
-      <app-section-card title="Mapa de empatia (arquetipo principal)">
+      <div class="h-6 md:h-8"></div>
+
+      <app-section-card title="Mapa de empatía (arquetipo principal)">
         <div class="grid gap-3 md:grid-cols-2">
           @for (item of empathyItems; track item.text) {
             <div class="alert" [class]="item.className">{{ item.text }}</div>
@@ -53,7 +57,9 @@ interface PersonaItem {
         </div>
       </app-section-card>
 
-      <app-section-card title="Auditoria UX (hallazgos)">
+      <div class="h-6 md:h-8"></div>
+
+      <app-section-card title="Auditoría UX (hallazgos)">
         <div class="overflow-x-auto">
           <table class="table">
             <thead>
