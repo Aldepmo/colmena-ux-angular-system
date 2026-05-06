@@ -29,7 +29,7 @@ export class ThemeToggleComponent implements OnInit {
   theme = signal<'light' | 'dark'>('light');
 
   ngOnInit() {
-    const currentTheme = document.documentElement.getAttribute('data-theme') as 'light' | 'dark' | null;
+    const currentTheme = document.documentElement.getAttribute('data-theme');
     if (currentTheme === 'dark') {
       this.theme.set('dark');
     }
