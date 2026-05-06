@@ -102,7 +102,7 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
                 </div>
 
                 <div class="flex-1 text-center sm:text-left">
-                  <div [class]="'inline-flex items-center gap-2 mb-2 ' + getSemaforoBadgeClass(semaforoGlobal()!.estado)">
+                  <div [class]="'inline-flex max-w-full items-center gap-2 mb-2 rounded-xl px-3 py-2 h-auto whitespace-normal leading-tight text-center sm:text-left ' + getSemaforoBadgeClass(semaforoGlobal()!.estado)">
                     <span>{{ getSemaforoIcon(semaforoGlobal()!.estado) }}</span>
                     <span class="font-semibold">{{ semaforoGlobal()!.label }}</span>
                   </div>
@@ -150,7 +150,7 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
                     }
                   </div>
                   <p class="text-xs text-warning font-medium">
-                    {{ 5 - estado().streak_dias > 0 ? (5 - estado().streak_dias) + ' días para tu badge' : '¡Badge desbloqueado! 🎉' }}
+                    {{ 5 - estado().streak_dias > 0 ? (5 - estado().streak_dias) + ' días para tu insignia' : '¡Insignia desbloqueada! 🎉' }}
                   </p>
                 </div>
               </div>
@@ -264,9 +264,9 @@ export class SaludFinancieraComponent {
   }
 
   getSemaforoBadgeClass(estado: EstadoAlerta): string {
-    if (estado === 'saludable') return 'badge badge-success gap-1';
-    if (estado === 'advertencia') return 'badge badge-warning gap-1';
-    return 'badge badge-error gap-1';
+    if (estado === 'saludable') return 'bg-success/15 text-success';
+    if (estado === 'advertencia') return 'bg-warning/15 text-warning';
+    return 'bg-error/15 text-error';
   }
 
   getSemaforoIcon(estado: EstadoAlerta): string {
