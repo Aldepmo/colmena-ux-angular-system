@@ -20,3 +20,20 @@ El proyecto aplica una **metodología de ingeniería de diseño industrializada*
 - **Estilos:** Tailwind CSS v3 & DaisyUI
 - **Estandarización:** Design Tokens (YAML)
 - **Control de Versiones:** Git con estándares *Conventional Commits*
+
+## 🏗️ Arquitectura de Componentes
+
+### Fase 4: Componentes Atómicos
+Located en `src/app/components/atoms/`:
+- **Button** - Botón con variantes y tamaños
+- **Input** - Campo de formulario con validación
+- **Badge** - Etiquetas de estado
+- **Alert** - Mensajes con dismiss
+- **ProgressBar** - Barra de progreso
+- **StreakDot** - Indicador de rachas
+- **Modal** - Diálogos
+- **StatCard** - Tarjetas de estadísticas
+
+Ver [CHANGELOG.md](./CHANGELOG.md) para historial completo.
+
+## 🚀 Iniciar Proyecto
