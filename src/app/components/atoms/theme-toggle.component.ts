@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -25,8 +25,15 @@ import { CommonModule } from '@angular/common';
     </button>
   `
 })
-export class ThemeToggleComponent {
+export class ThemeToggleComponent implements OnInit {
   theme = signal<'light' | 'dark'>('light');
+
+  ngOnInit() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') as 'light' | 'dark' | null;
+    if (currentTheme === 'dark') {
+      this.theme.set('dark');
+    }
+  }
 
   toggle() {
     const newTheme = this.theme() === 'light' ? 'dark' : 'light';

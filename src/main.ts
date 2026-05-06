@@ -24,6 +24,7 @@ import { ThemeToggleComponent } from './app/components/atoms/theme-toggle.compon
             <li><a routerLink="/fase-2" routerLinkActive="active" class="hidden lg:inline">Fase 2</a></li>
             <li><a routerLink="/salud-financiera" routerLinkActive="active" class="text-primary font-semibold hidden lg:inline">Salud Financiera</a></li>
           </ul>
+          <app-theme-toggle class="hidden lg:inline ml-4" />
         </div>
         <div class="navbar-end md:hidden">
           <div class="dropdown dropdown-end">
