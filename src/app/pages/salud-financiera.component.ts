@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { COLMENA_DATA, ESTADO_INICIAL, type Categoria, type EstadoFinanciero } from '../models/colmena-data';
 import { TarjetaCategoriaComponent } from '../components/tarjeta-categoria.component';
+import { StatCardComponent } from '../components/atoms/stat-card.component';
 
 type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
 
 @Component({
   selector: 'app-salud-financiera',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, TarjetaCategoriaComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, TarjetaCategoriaComponent, StatCardComponent],
   template: `
     <div class="bg-base-200 min-h-screen font-sans">
       <header class="bg-base-100 border-b border-base-300 shadow-sm">
@@ -24,14 +25,8 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
             </div>
           </div>
           <div class="flex items-center gap-1.5">
-            <div class="badge badge-warning badge-sm gap-0.5 text-[10px] py-1">
-              <span class="text-[10px]">🔥</span>
-              {{ estado().streak_dias }}
-            </div>
-            <div class="badge badge-ghost badge-sm gap-0.5 text-[10px] py-1">
-              <span class="text-[10px]">⭐</span>
-              {{ estado().xp_total }}
-            </div>
+            <app-stat-card icon="🔥" accent="warning" [label]="'Racha'" [value]="estado().streak_dias" sub="días"></app-stat-card>
+            <app-stat-card icon="⭐" accent="accent" [label]="'Puntos XP'" [value]="estado().xp_total"></app-stat-card>
           </div>
         </div>
       </header>
