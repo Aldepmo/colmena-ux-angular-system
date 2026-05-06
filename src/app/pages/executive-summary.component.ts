@@ -31,6 +31,8 @@ interface PhaseItem {
         description="Rediseño de la experiencia de registro financiero para microempresarias latinoamericanas con baja alfabetización digital, bajo la metodología Design Thinking."
       />
 
+      <div class="h-4 md:h-6"></div>
+
       <app-section-card>
         <div class="flex flex-wrap gap-3">
           @for (tag of tags; track tag) {
@@ -39,13 +41,15 @@ interface PhaseItem {
         </div>
       </app-section-card>
 
-      <div class="h-4 md:h-6"></div>
+      <div class="h-6 md:h-8"></div>
 
       <div class="grid gap-4 md:grid-cols-3">
         @for (kpi of kpis; track kpi.label) {
           <app-kpi-card [value]="kpi.value" [label]="kpi.label" />
         }
       </div>
+
+      <div class="h-6 md:h-8"></div>
 
       <app-section-card title="Problema central">
         <div class="grid gap-3 md:grid-cols-2">
