@@ -23,10 +23,10 @@ interface PhaseItem {
   standalone: true,
   imports: [RouterLink, PhaseHeaderComponent, KpiCardComponent, PhaseRowComponent, SectionCardComponent],
   template: `
-    <section class="space-y-6">
+    <section class="space-y-6 md:space-y-8">
       <app-phase-header
         eyebrow="Case study · UX/UI Redesign · 2026"
-        title="Modulo de"
+        title="Módulo de"
         highlight="Salud Financiera - Colmena / Sustentia"
         description="Rediseño de la experiencia de registro financiero para microempresarias latinoamericanas con baja alfabetización digital, bajo la metodología Design Thinking."
       />
@@ -38,6 +38,8 @@ interface PhaseItem {
           }
         </div>
       </app-section-card>
+
+      <div class="h-4 md:h-6"></div>
 
       <div class="grid gap-4 md:grid-cols-3">
         @for (kpi of kpis; track kpi.label) {
@@ -53,7 +55,9 @@ interface PhaseItem {
         </div>
       </app-section-card>
 
-      <app-section-card title="Plan de ejecucion por fases">
+      <div class="h-4 md:h-6"></div>
+
+      <app-section-card title="Plan de ejecución por fases">
         <div class="space-y-2">
           @for (phase of phases; track phase.number) {
             <app-phase-row
@@ -67,6 +71,8 @@ interface PhaseItem {
         </div>
       </app-section-card>
 
+      <div class="h-4 md:h-6"></div>
+
       <app-section-card title="Stack de herramientas">
         <div class="flex flex-wrap gap-2">
           @for (tool of tools; track tool) {
@@ -77,13 +83,13 @@ interface PhaseItem {
 
       <div class="alert alert-warning">
         <span>
-          <strong>Valor diferencial:</strong> foco en eficiencia operativa del modulo, con prototipos funcionales para validar logica de negocio antes del desarrollo completo.
+          <strong>Valor diferencial:</strong> foco en eficiencia operativa del módulo, con prototipos funcionales para validar lógica de negocio antes del desarrollo completo.
         </span>
       </div>
 
       <div class="flex flex-wrap gap-3">
         <a class="btn btn-primary" routerLink="/fase-1">Comenzar con Fase 1</a>
-        <button class="btn btn-secondary">Ver diseno hi-fi</button>
+        <button class="btn btn-secondary">Ver diseño hi-fi</button>
       </div>
     </section>
   `,
@@ -96,15 +102,15 @@ export class ExecutiveSummaryComponent {
   ] as const;
 
   readonly kpis: KpiItem[] = [
-    { value: '5', label: 'Fases de diseno completadas' },
+    { value: '5', label: 'Fases de diseño completadas' },
     { value: '3+', label: 'Rondas de usability testing' },
-    { value: '1', label: 'Sistema de diseno escalable' },
+    { value: '1', label: 'Sistema de diseño escalable' },
   ];
 
   readonly coreProblems = [
     'Lenguaje financiero técnico genera fricción y abandono en usuarias con baja alfabetización digital.',
-    'El flujo de registro de ingresos y egresos no genera valor inmediato ni habito de uso.',
-    'Interfaz no optimizada para dispositivos moviles de gama media en entornos con luz intensa.',
+    'El flujo de registro de ingresos y egresos no genera valor inmediato ni hábito de uso.',
+    'Interfaz no optimizada para dispositivos móviles de gama media en entornos con luz intensa.',
     'Sin indicadores de salud financiera que motiven la toma de decisiones basada en datos.',
   ] as const;
 
