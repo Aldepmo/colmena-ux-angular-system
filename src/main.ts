@@ -16,13 +16,28 @@ import { SaludFinancieraComponent } from './app/pages/salud-financiera.component
         <div class="navbar-start">
           <a class="text-lg font-semibold">Colmena Design System</a>
         </div>
-        <div class="navbar-center hidden md:flex">
+        <div class="navbar-center md:flex">
           <ul class="menu menu-horizontal gap-2 px-1">
             <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Resumen</a></li>
             <li><a routerLink="/fase-1" routerLinkActive="active">Fase 1</a></li>
             <li><a routerLink="/fase-2" routerLinkActive="active">Fase 2</a></li>
             <li><a routerLink="/salud-financiera" routerLinkActive="active" class="text-primary font-semibold">Salud Financiera</a></li>
           </ul>
+        </div>
+        <div class="navbar-end md:hidden">
+          <div class="dropdown dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-square">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </div>
+            <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] mt-2 w-56 p-2 shadow-lg border border-base-300">
+              <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="btn btn-ghost btn-sm justify-start">Resumen</a></li>
+              <li><a routerLink="/fase-1" routerLinkActive="active" class="btn btn-ghost btn-sm justify-start">Fase 1</a></li>
+              <li><a routerLink="/fase-2" routerLinkActive="active" class="btn btn-ghost btn-sm justify-start">Fase 2</a></li>
+              <li><a routerLink="/salud-financiera" routerLinkActive="active" class="btn btn-ghost btn-sm justify-start text-primary font-semibold">Salud Financiera</a></li>
+            </ul>
+          </div>
         </div>
       </header>
 

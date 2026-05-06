@@ -78,7 +78,7 @@ import { SectionCardComponent } from '../components/section-card.component';
       </app-section-card>
 
       <div class="flex flex-wrap gap-3">
-        <button class="btn btn-primary">Continuar a Fase 3</button>
+        <a routerLink="/salud-financiera" class="btn btn-primary">Continuar a Fase 3</a>
         <a class="btn btn-secondary" routerLink="/fase-1">Volver a Fase 1</a>
       </div>
     </section>
