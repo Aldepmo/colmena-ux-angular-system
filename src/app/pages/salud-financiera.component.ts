@@ -12,7 +12,7 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
   imports: [CommonModule, ReactiveFormsModule, FormsModule, TarjetaCategoriaComponent],
   template: `
     <div class="bg-base-200 min-h-screen font-sans">
-      <header class="bg-base-100 border-b border-base-300 sticky top-0 z-50 shadow-sm">
+      <header class="bg-base-100 border-b border-base-300 shadow-sm">
         <div class="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <div class="flex items-center gap-2">
             <div class="w-8 h-8 bg-primary rounded-xl flex items-center justify-center">
@@ -23,14 +23,14 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
               <p class="text-xs text-base-content/40">Salud Financiera</p>
             </div>
           </div>
-          <div class="flex items-center gap-2">
-            <div class="badge badge-warning gap-1 text-xs">
-              <span>🔥</span>
-              {{ estado().streak_dias }} días
+          <div class="flex items-center gap-1.5">
+            <div class="badge badge-warning badge-sm gap-0.5 text-[10px] py-1">
+              <span class="text-[10px]">🔥</span>
+              {{ estado().streak_dias }}
             </div>
-            <div class="badge badge-ghost gap-1 text-xs">
-              <span>⭐</span>
-              {{ estado().xp_total }} XP
+            <div class="badge badge-ghost badge-sm gap-0.5 text-[10px] py-1">
+              <span class="text-[10px]">⭐</span>
+              {{ estado().xp_total }}
             </div>
           </div>
         </div>
@@ -101,7 +101,7 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
                   </svg>
                 </div>
 
-                <div class="flex-1 text-center sm:text-left">
+<div class="flex-1 text-center sm:text-left">
                   <div [class]="'inline-flex max-w-full items-center gap-2 mb-2 rounded-xl px-3 py-2 h-auto whitespace-normal leading-tight text-center sm:text-left ' + getSemaforoBadgeClass(semaforoGlobal()!.estado)">
                     <span>{{ getSemaforoIcon(semaforoGlobal()!.estado) }}</span>
                     <span class="font-semibold">{{ semaforoGlobal()!.label }}</span>
@@ -109,30 +109,6 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
                   <p class="text-sm text-base-content/60 mb-3">
                     Tu salud financiera se calcula con base en el control de tus tres categorías de gasto.
                   </p>
-
-                  <div class="flex flex-wrap gap-2 sm:gap-3 justify-center sm:justify-start max-w-full">
-                    <div class="flex items-center gap-1.5 sm:gap-2 bg-base-200 rounded-lg px-2 py-1 sm:px-3 sm:py-1.5 shrink-0">
-                      <span class="text-warning text-sm sm:text-base">🔥</span>
-                      <div class="whitespace-nowrap">
-                        <p class="text-[9px] sm:text-[10px] text-base-content/50 leading-none">Racha</p>
-                        <p class="font-bold text-[10px] sm:text-xs text-base-content leading-tight">{{ estado().streak_dias }} días</p>
-                      </div>
-                    </div>
-                    <div class="flex items-center gap-1.5 sm:gap-2 bg-base-200 rounded-lg px-2 py-1 sm:px-3 sm:py-1.5 shrink-0">
-                      <span class="text-accent text-sm sm:text-base">⭐</span>
-                      <div class="whitespace-nowrap">
-                        <p class="text-[9px] sm:text-[10px] text-base-content/50 leading-none">Puntos XP</p>
-                        <p class="font-bold text-[10px] sm:text-xs text-base-content leading-tight">{{ estado().xp_total }} XP</p>
-                      </div>
-                    </div>
-                    <div class="flex items-center gap-1.5 sm:gap-2 bg-base-200 rounded-lg px-2 py-1 sm:px-3 sm:py-1.5 shrink-0">
-                      <span class="text-primary text-sm sm:text-base">🏅</span>
-                      <div class="whitespace-nowrap">
-                        <p class="text-[9px] sm:text-[10px] text-base-content/50 leading-none">Meta racha</p>
-                        <p class="font-bold text-[10px] sm:text-xs text-base-content leading-tight">5 días</p>
-                      </div>
-                    </div>
-                  </div>
                 </div>
 
                 <div class="shrink-0 flex flex-col items-center gap-2">
