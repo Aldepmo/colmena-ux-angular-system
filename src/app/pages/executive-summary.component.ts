@@ -119,11 +119,11 @@ export class ExecutiveSummaryComponent {
   ] as const;
 
   readonly phases: PhaseItem[] = [
-    { number: '01', title: 'Empatia e Investigacion', subtitle: 'Auditoria UX · Proto-personas · Entrevistas', badge: 'Research', tone: 'info' },
-    { number: '02', title: 'Definicion y Estrategia', subtitle: 'User journey · Benchmark · UX Writing', badge: 'Estrategia', tone: 'warning' },
-    { number: '03', title: 'Ideacion y Prototipado', subtitle: 'Arquitectura · Wireframes · Gamificacion', badge: 'Ideacion', tone: 'warning' },
-    { number: '04', title: 'Diseno Visual y Sistema', subtitle: 'Atomic design · Mobile-first · Accesibilidad', badge: 'Diseno', tone: 'accent' },
-    { number: '05', title: 'Validacion y Testing', subtitle: 'Maze · Insights · Handoff', badge: 'Testing', tone: 'info' },
+    { number: '01', title: 'Empatía e Investigación', subtitle: 'Auditoría UX · Proto-personas · Entrevistas', badge: 'Investigación', tone: 'info' },
+    { number: '02', title: 'Definición y Estrategia', subtitle: 'User journey · Benchmark · UX Writing', badge: 'Estrategia', tone: 'warning' },
+    { number: '03', title: 'Ideación y Prototipado', subtitle: 'Arquitectura · Wireframes · Gamificación', badge: 'Ideación', tone: 'warning' },
+    { number: '04', title: 'Diseño Visual y Sistema', subtitle: 'Atomic design · Mobile-first · Accesibilidad', badge: 'Diseño', tone: 'accent' },
+    { number: '05', title: 'Validación y Testing', subtitle: 'Maze · Insights · Handoff', badge: 'Testing', tone: 'info' },
   ];
 
   readonly tools = ['Figma', 'Maze', 'Notion', 'Claude', 'Miro', 'WCAG 2.1', 'Atomic Design'] as const;
