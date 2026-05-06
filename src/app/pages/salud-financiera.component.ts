@@ -110,26 +110,26 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
                     Tu salud financiera se calcula con base en el control de tus tres categorías de gasto.
                   </p>
 
-                  <div class="flex flex-wrap gap-2 sm:gap-3 justify-center sm:justify-start max-w-md">
-                    <div class="flex items-center gap-2 bg-base-200 rounded-xl px-2 py-1.5 sm:px-3 sm:py-1.5 shrink-0">
-                      <span class="text-warning">🔥</span>
+                  <div class="flex flex-wrap gap-2 sm:gap-3 justify-center sm:justify-start max-w-full">
+                    <div class="flex items-center gap-1.5 sm:gap-2 bg-base-200 rounded-lg px-2 py-1 sm:px-3 sm:py-1.5 shrink-0">
+                      <span class="text-warning text-sm sm:text-base">🔥</span>
                       <div class="whitespace-nowrap">
-                        <p class="text-[10px] sm:text-xs text-base-content/50 leading-none">Racha</p>
-                        <p class="font-bold text-xs sm:text-sm text-base-content leading-tight">{{ estado().streak_dias }} días</p>
+                        <p class="text-[9px] sm:text-[10px] text-base-content/50 leading-none">Racha</p>
+                        <p class="font-bold text-[10px] sm:text-xs text-base-content leading-tight">{{ estado().streak_dias }} días</p>
                       </div>
                     </div>
-                    <div class="flex items-center gap-2 bg-base-200 rounded-xl px-2 py-1.5 sm:px-3 sm:py-1.5 shrink-0">
-                      <span class="text-accent">⭐</span>
+                    <div class="flex items-center gap-1.5 sm:gap-2 bg-base-200 rounded-lg px-2 py-1 sm:px-3 sm:py-1.5 shrink-0">
+                      <span class="text-accent text-sm sm:text-base">⭐</span>
                       <div class="whitespace-nowrap">
-                        <p class="text-[10px] sm:text-xs text-base-content/50 leading-none">Puntos XP</p>
-                        <p class="font-bold text-xs sm:text-sm text-base-content leading-tight">{{ estado().xp_total }} XP</p>
+                        <p class="text-[9px] sm:text-[10px] text-base-content/50 leading-none">Puntos XP</p>
+                        <p class="font-bold text-[10px] sm:text-xs text-base-content leading-tight">{{ estado().xp_total }} XP</p>
                       </div>
                     </div>
-                    <div class="flex items-center gap-2 bg-base-200 rounded-xl px-2 py-1.5 sm:px-3 sm:py-1.5 shrink-0">
-                      <span class="text-primary">🏅</span>
+                    <div class="flex items-center gap-1.5 sm:gap-2 bg-base-200 rounded-lg px-2 py-1 sm:px-3 sm:py-1.5 shrink-0">
+                      <span class="text-primary text-sm sm:text-base">🏅</span>
                       <div class="whitespace-nowrap">
-                        <p class="text-[10px] sm:text-xs text-base-content/50 leading-none">Meta racha</p>
-                        <p class="font-bold text-xs sm:text-sm text-base-content leading-tight">5 días</p>
+                        <p class="text-[9px] sm:text-[10px] text-base-content/50 leading-none">Meta racha</p>
+                        <p class="font-bold text-[10px] sm:text-xs text-base-content leading-tight">5 días</p>
                       </div>
                     </div>
                   </div>
