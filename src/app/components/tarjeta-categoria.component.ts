@@ -31,13 +31,11 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
             [class]="'badge gap-1 shrink-0 text-xs font-semibold ' + getSemaforoBadgeClass()"
             role="status"
             [attr.aria-live]="getEstado() === 'critico' ? 'assertive' : 'polite'"
-            [attr.aria-label]="'Estado de ' + categoria.nombre + ': ' + getEstadoLabel() + ', ' + pct() + ' por ciento del presupuesto'"
+            [attr.aria-label]="'Estado de ' + categoria.nombre + ': ' + getEstadoLabel() + ', ' + pct() + ' por ciento'"
           >
-          <div [class]="'badge gap-1 shrink-0 text-xs ' + getSemaforoBadgeClass()">
             {{ getEstado() === 'saludable' ? '✓' : getEstado() === 'advertencia' ? '⚠' : '🚨' }}
             {{ pct() }}%
           </div>
-        </div>
 
         <div class="flex items-end justify-between">
           <div>
@@ -63,7 +61,6 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
           aria-valuemin="0"
           aria-valuemax="100"
         >
-        <div class="w-full bg-base-300 rounded-full h-2.5 overflow-hidden">
           <div
             class="h-full rounded-full transition-all duration-700 ease-out"
             [class]="getBarColorClass()"
