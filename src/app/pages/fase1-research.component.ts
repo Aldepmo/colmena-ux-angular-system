@@ -87,7 +87,7 @@ export class Fase1ResearchComponent {
   readonly personas: PersonaItem[] = [
     {
       name: 'Maria Guadalupe',
-      subtitle: 'Venta de comida · 38 anos · Mexico',
+      subtitle: 'Venta de comida · 38 años · México',
       device: 'Android gama media, datos limitados.',
       context: 'Cuaderno de anotaciones, no banco formal.',
       pain: 'Miedo a perder datos',
@@ -95,7 +95,7 @@ export class Fase1ResearchComponent {
     },
     {
       name: 'Lucia Rodriguez',
-      subtitle: 'Artesania y ropa · 45 anos · Colombia',
+      subtitle: 'Artesanía y ropa · 45 años · Colombia',
       device: 'Smartphone basico, WiFi en casa.',
       context: 'Confunde costos con ganancias.',
       pain: 'Formularios intimidantes',
@@ -103,7 +103,7 @@ export class Fase1ResearchComponent {
     },
     {
       name: 'Ana Perez',
-      subtitle: 'Peluqueria movil · 29 anos · Peru',
+      subtitle: 'Peluquería móvil · 29 años · Perú',
       device: 'iPhone basico, buena conectividad.',
       context: 'Adopta apps si son simples y claras.',
       pain: 'Mucho texto en pantalla',
@@ -111,7 +111,7 @@ export class Fase1ResearchComponent {
     },
     {
       name: 'Rosa Chavez',
-      subtitle: 'Tienda de barrio · 54 anos · Bolivia',
+      subtitle: 'Tienda de barrio · 54 años · Bolivia',
       device: 'Android basico, pantalla pequena.',
       context: 'Necesita guia paso a paso.',
       pain: 'Mezcla finanzas personales',

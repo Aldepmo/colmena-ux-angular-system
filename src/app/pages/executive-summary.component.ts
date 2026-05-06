@@ -28,7 +28,7 @@ interface PhaseItem {
         eyebrow="Case study · UX/UI Redesign · 2026"
         title="Modulo de"
         highlight="Salud Financiera - Colmena / Sustentia"
-        description="Rediseno de la experiencia de registro financiero para microempresarias latinoamericanas con baja alfabetizacion digital, bajo la metodologia Design Thinking."
+        description="Rediseño de la experiencia de registro financiero para microempresarias latinoamericanas con baja alfabetización digital, bajo la metodología Design Thinking."
       />
 
       <app-section-card>
@@ -102,7 +102,7 @@ export class ExecutiveSummaryComponent {
   ];
 
   readonly coreProblems = [
-    'Lenguaje financiero tecnico genera friccion y abandono en usuarias con baja alfabetizacion digital.',
+    'Lenguaje financiero técnico genera fricción y abandono en usuarias con baja alfabetización digital.',
     'El flujo de registro de ingresos y egresos no genera valor inmediato ni habito de uso.',
     'Interfaz no optimizada para dispositivos moviles de gama media en entornos con luz intensa.',
     'Sin indicadores de salud financiera que motiven la toma de decisiones basada en datos.',
