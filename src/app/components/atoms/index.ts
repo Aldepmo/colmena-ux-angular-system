@@ -6,3 +6,4 @@ export * from './progress-bar.component';
 export * from './streak-dot.component';
 export * from './modal.component';
 export * from './stat-card.component';
+export * from './theme-toggle.component';
