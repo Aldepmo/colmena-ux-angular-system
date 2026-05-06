@@ -18,6 +18,7 @@ export class BadgeComponent {
   @Input() variant: 'success' | 'warning' | 'error' | 'info' | 'neutral' | 'primary' | 'secondary' | 'ghost' = 'neutral';
   @Input() size: 'xs' | 'sm' | 'md' | 'lg' = 'md';
   @Input() outline = false;
+  @Input() icon: string | null = null;
 
   private get variants() {
     return {

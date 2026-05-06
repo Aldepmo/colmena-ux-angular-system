@@ -2,13 +2,17 @@ import { Component, Input, Output, EventEmitter, signal, computed } from '@angul
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { type Categoria } from '../models/colmena-data';
+import { BadgeComponent } from './atoms/badge.component';
+import { ProgressBarComponent } from './atoms/progress-bar.component';
+import { ButtonComponent } from './atoms/button.component';
+import { InputComponent } from './atoms/input.component';
 
 type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
 
 @Component({
   selector: 'app-tarjeta-categoria',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, BadgeComponent, ProgressBarComponent, ButtonComponent, InputComponent],
   template: `
     <section
       class="card bg-base-100 shadow-xl border transition-all duration-500 hover:shadow-2xl hover:-translate-y-0.5"

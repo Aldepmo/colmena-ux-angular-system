@@ -91,8 +91,8 @@ export class InputComponent {
   }
 
   get describedBy(): string {
-    const parts = [this.error ? this.errorId : null, this.hint ? this.hintId : null].filter(Boolean);
-    return parts.length ? parts.join(' ') : undefined;
+    const parts = [this.error ? this.errorId : null, this.hint ? this.hintId : null].filter(Boolean) as string[];
+    return parts.length ? parts.join(' ') : '';
   }
 
   private get sizeClass(): string {
