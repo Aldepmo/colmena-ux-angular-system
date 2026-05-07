@@ -25,6 +25,11 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
             </div>
           </div>
           <div class="flex items-center gap-1.5">
+            @if (getCategoriaCritica()) {
+              <div class="alert alert-error py-1 px-2 text-xs">
+                <span>⚠️ {{ getCategoriaCritica()?.nombre }}</span>
+              </div>
+            }
             <app-stat-card icon="🔥" accent="warning" [label]="'Racha'" [value]="estado().streak_dias" sub="días"></app-stat-card>
             <app-stat-card icon="⭐" accent="accent" [label]="'Puntos XP'" [value]="estado().xp_total"></app-stat-card>
           </div>
@@ -100,6 +105,7 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
                   <div [class]="'inline-flex max-w-full items-center gap-2 mb-2 rounded-xl px-3 py-2 h-auto whitespace-normal leading-tight text-center sm:text-left ' + getSemaforoBadgeClass(semaforoGlobal()!.estado)">
                     <span>{{ getSemaforoIcon(semaforoGlobal()!.estado) }}</span>
                     <span class="font-semibold">{{ semaforoGlobal()!.label }}</span>
+                    <span class="text-[10px] opacity-70">({{ semaforoGlobal()!.score }}%)</span>
                   </div>
                   <p class="text-sm text-base-content/60 mb-3">
                     Tu salud financiera se calcula con base en el control de tus tres categorías de gasto.
@@ -190,16 +196,29 @@ export class SaludFinancieraComponent {
     const score = Math.max(0, Math.round(100 - avgPct * 0.8));
 
     let estado: EstadoAlerta = 'saludable';
-    let label = 'Tu negocio está sano';
+    let label = 'OK';
     if (score < 40) {
       estado = 'critico';
-      label = 'Tu negocio necesita atención';
+      label = '¡Límite!';
     } else if (score < 70) {
       estado = 'advertencia';
-      label = 'Hay áreas de oportunidad';
+      label = 'Cuidado';
     }
 
     return { score, estado, label };
+  }
+
+  getCategoriaCritica(): Categoria | null {
+    const gastos = this.estado().gastos_actuales;
+    const presupuestos = this.estado().presupuestos;
+    
+    const cats = COLMENA_DATA.categorias.map(cat => ({
+      cat,
+      pct: this.calcPct(gastos[cat.id] || 0, presupuestos[cat.id] || 1)
+    }));
+    
+    const critico = cats.find(c => c.pct >= 100);
+    return critico?.cat || null;
   }
 
   calcPct(gasto: number, limite: number): number {

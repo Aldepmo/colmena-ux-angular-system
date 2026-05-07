@@ -115,7 +115,9 @@ type EstadoAlerta = 'saludable' | 'advertencia' | 'critico';
           <button
             type="button"
             (click)="agregar()"
+            [disabled]="!montoInput || montoInput <= 0"
             [attr.aria-label]="'Agregar gasto en ' + categoria.nombre"
+            [attr.aria-disabled]="!montoInput || montoInput <= 0 ? 'true' : null"
             class="btn btn-primary btn-sm gap-1 rounded-xl shrink-0"
           >
             <span>+</span>
